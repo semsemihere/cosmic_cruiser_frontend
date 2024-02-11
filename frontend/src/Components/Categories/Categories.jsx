@@ -7,17 +7,26 @@ const CATEGORIES_ENDPOINT = `${BACKEND_URL}/categories`;
 
 function AddCategoryForm() {
   const [name, setName] = useState('')
+  const [number, setNumber] = useState(0);
 
   const changeName = (event) => { setName(event.target.value); };
-  
+  const changeNumber = (event) => { setNumber(event.target.value); };
+
   return (
     <form>
+
       <label htmlFor='name'>
         Name
       </label>
       <input type="text" id="name" value={name} onChange={changeName}>
-
       </input>
+
+      <label htmlFor='number'>
+        Number
+      </label>
+      <input type="number" id="number" value={number} onChange={changeNumber}>
+      </input>
+
     </form>
   );
 
