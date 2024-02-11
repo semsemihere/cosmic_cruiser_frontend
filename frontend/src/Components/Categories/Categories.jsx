@@ -5,6 +5,24 @@ import { BACKEND_URL } from '../../constants';
 
 const CATEGORIES_ENDPOINT = `${BACKEND_URL}/categories`;
 
+function AddCategoryForm() {
+  const [name, setName] = useState('')
+
+  const changeName = (event) => { setName(event.target.value); };
+  
+  return (
+    <form>
+      <label htmlFor='name'>
+        Name
+      </label>
+      <input type="text" id="name" value={name} onChange={changeName}>
+
+      </input>
+    </form>
+  );
+
+}
+
 function Categories() {
   const [error, setError] = useState("");
   const[categories, setCategories] = useState([]);
@@ -37,6 +55,9 @@ function Categories() {
           {error}
         </div>
       )}
+
+      <AddCategoryForm />
+
       {categories.map((categories) => (
         <div className="categories-container">
           <h2>{categories.name}</h2>
