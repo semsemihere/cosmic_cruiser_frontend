@@ -5,15 +5,18 @@ import { BACKEND_URL } from '../../constants';
 
 const CATEGORIES_ENDPOINT = `${BACKEND_URL}/categories`;
 
-function AddCategoryForm() {
+function AddCategoryForm({ setError }) {
   const [name, setName] = useState('')
   const [number, setNumber] = useState(0);
 
   const changeName = (event) => { setName(event.target.value); };
   const changeNumber = (event) => { setNumber(event.target.value); };
 
-  const addCategory = () => {
-    
+  const addCategory = (event) => {
+    event.preventDefault();
+    axios.post(CATEGORIES_ENDPOINT, { name: name, numSections: number })
+    .then()
+    .catch(() => { setError('There was a problem adding a category!'); });
   };
 
   return (
@@ -30,7 +33,7 @@ function AddCategoryForm() {
       </label>
       <input type="number" id="number" value={number} onChange={changeNumber}>
       </input>
-      <button type="submit" onClick={addCategory}>Submit</button>
+      <button type="submit" onClick={addCategory}>Add Category</button>
     </form>
   );
 
@@ -69,7 +72,7 @@ function Categories() {
         </div>
       )}
 
-      <AddCategoryForm />
+      <AddCategoryForm setError={setError} />
 
       {categories.map((categories) => (
         <div className="categories-container">
