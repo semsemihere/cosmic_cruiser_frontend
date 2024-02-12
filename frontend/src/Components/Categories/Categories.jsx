@@ -12,6 +12,10 @@ function AddCategoryForm() {
   const changeName = (event) => { setName(event.target.value); };
   const changeNumber = (event) => { setNumber(event.target.value); };
 
+  const addCategory = () => {
+    
+  };
+
   return (
     <form>
 
@@ -26,7 +30,7 @@ function AddCategoryForm() {
       </label>
       <input type="number" id="number" value={number} onChange={changeNumber}>
       </input>
-
+      <button type="submit" onClick={addCategory}>Submit</button>
     </form>
   );
 
