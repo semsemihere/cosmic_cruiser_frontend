@@ -164,3 +164,18 @@ nav a:focus {
   margin: 0;
   font-size: 1.5rem;
 }
+
+.users-container {
+  border: 2px solid var(--accent-color);
+  margin: 1rem 0;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  border-radius: 5px;
+}
+
+.users-container p,
+.users-container h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}

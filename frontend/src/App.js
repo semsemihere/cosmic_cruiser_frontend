@@ -9,6 +9,7 @@ import './App.css';
 
 import Navbar from './Components/Navbar';
 import Categories from './Components/Categories';
+import Users from './Components/Users';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="categories" element={<Categories />} />
+        <Route path="users" element={<Users />} />
+        
       </Routes>
     </BrowserRouter>
   );

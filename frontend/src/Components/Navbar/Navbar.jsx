@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const PAGES = [
   { label: 'Home', destination: '/' },
   { label: 'View All Categories', destination: '/categories' },
-  { label: 'View All Users', destination: '/users' },
+  { label: 'View All Users', destination: '/users' }
 ];
 
 function NavLink({ page }) {
