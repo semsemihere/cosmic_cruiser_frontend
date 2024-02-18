@@ -6,15 +6,17 @@ import { BACKEND_URL } from '../../constants';
 const CATEGORIES_ENDPOINT = `${BACKEND_URL}/categories`;
 
 function AddCategoryForm({ setError, fetchCategories }) {
-  const [name, setName] = useState('')
-  const [number, setNumber] = useState(0);
+  const [name, setName] = useState('');
+  const [categoryID, setID] = useState('');
+  const [numSections, setNumberOfSections] = useState(0);
 
   const changeName = (event) => { setName(event.target.value); };
-  const changeNumber = (event) => { setNumber(event.target.value); };
+  const changeID = (event) => { setID(event.target.value); };
+  const changeNumberOfSections = (event) => { setNumberOfSections(event.target.value); };
 
   const addCategory = (event) => {
     event.preventDefault();
-    axios.post(CATEGORIES_ENDPOINT, { name: name, numSections: number })
+    axios.post(CATEGORIES_ENDPOINT, { name: name, categoryID: categoryID, numSections: numSections })
     .then(fetchCategories)  // if successful
     .catch(() => { setError('There was a problem adding a category!'); });
   };
@@ -29,10 +31,16 @@ function AddCategoryForm({ setError, fetchCategories }) {
       <input required type="text" id="name" value={name} onChange={changeName}>
       </input>
 
-      <label htmlFor='number'>
+      <label htmlFor='categoryID'>
+        Category ID
+      </label>
+      <input required type="text" id="categoryID" value={categoryID} onChange={changeID}>
+      </input>
+
+      <label htmlFor='numSections'>
         Number of Sections
       </label>
-      <input required type="number" id="number" value={number} onChange={changeNumber}>
+      <input required type="number" id="numSections" value={numSections} onChange={changeNumberOfSections}>
       </input>
 
       {/* <button type="button" onClick={cancel}>Cancel</button> */}
@@ -80,7 +88,7 @@ function Categories() {
       {categories.map((categories) => (
         <div className="categories-container">
           <h2>{categories.name}</h2>
-          <p>Sections: {categories.numSections} </p>
+          <p>ID: {categories.categoryID} <br></br> Sections: {categories.numSections} </p>
         </div>
       ))
 
