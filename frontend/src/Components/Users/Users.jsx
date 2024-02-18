@@ -7,10 +7,10 @@ const USERS_ENDPOINT = `${BACKEND_URL}/users`;
 
 function AddUserForm() {
   const [name, setName] = useState('')
-  const [number, setNumber] = useState(0);
+  const [email, setEmail] = useState('');
 
   const changeName = (event) => { setName(event.target.value); };
-  const changeNumber = (event) => { setNumber(event.target.value); };
+  const changeEmail = (event) => { setEmail(event.target.value); };
 
   const addUser = () => {
     
@@ -25,10 +25,10 @@ function AddUserForm() {
       <input type="text" id="name" value={name} onChange={changeName}>
       </input>
 
-      <label htmlFor='number'>
-        Number
+      <label htmlFor='email'>
+        Email
       </label>
-      <input type="number" id="number" value={number} onChange={changeNumber}>
+      <input type="text" id="name" value={email} onChange={changeEmail}>
       </input>
       <button type="submit" onClick={addUser}>Submit</button>
     </form>
@@ -38,7 +38,7 @@ function AddUserForm() {
 
 function Users() {
   const [error, setError] = useState("");
-  const[Users, setUsers] = useState([]);
+  const[users, setUsers] = useState([]);
 
   useEffect(
     () => {
@@ -73,8 +73,8 @@ function Users() {
 
       {users.map((users) => (
         <div className="users-container">
-          <h2>{users.name}</h2>
-          <p>Sections: {users.numSections} </p>
+          <h2>{users.username}</h2>
+          <p>Email: {users.email} </p>
         </div>
       ))
 

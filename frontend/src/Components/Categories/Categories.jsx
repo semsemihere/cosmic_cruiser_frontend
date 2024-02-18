@@ -29,7 +29,7 @@ function AddCategoryForm({ setError }) {
       </input>
 
       <label htmlFor='number'>
-        Number
+        Number of Sections
       </label>
       <input type="number" id="number" value={number} onChange={changeNumber}>
       </input>
