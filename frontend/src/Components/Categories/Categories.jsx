@@ -18,7 +18,7 @@ function AddCategoryForm({ setError, fetchCategories }) {
     event.preventDefault();
     axios.post(CATEGORIES_ENDPOINT, { name: name, categoryID: categoryID, numSections: numSections })
     .then(fetchCategories)  // if successful
-    .catch(() => { setError('There was a problem adding a category!'); });
+    .catch((error) => { setError(error.response.data.message); });
   };
 
 
