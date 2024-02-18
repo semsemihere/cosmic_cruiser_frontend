@@ -17,7 +17,10 @@ function AddCategoryForm({ setError, fetchCategories }) {
   const addCategory = (event) => {
     event.preventDefault();
     axios.post(CATEGORIES_ENDPOINT, { name: name, categoryID: categoryID, numSections: numSections })
-    .then(fetchCategories)  // if successful
+    .then(() => {  // if successful
+      setError('');
+      fetchCategories();
+    })
     .catch((error) => { setError(error.response.data.message); });
   };
 
@@ -83,7 +86,7 @@ function Categories() {
         </div>
       )}
 
-      <AddCategoryForm setError={setError} />
+      <AddCategoryForm setError={setError} fetchCategories={fetchCategories}/>
 
       {categories.map((categories) => (
         <div className="categories-container">
