@@ -5,7 +5,7 @@ import { BACKEND_URL } from '../../constants';
 
 const USERS_ENDPOINT = `${BACKEND_URL}/users`;
 
-function AddUserForm() {
+function AddUserForm({setError, fetchUsers}) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,9 +14,16 @@ function AddUserForm() {
   const changeEmail = (event) => { setEmail(event.target.value); };
   const changePassword = (event) => { setPassword(event.target.value); };
 
-  const addUser = () => {
-    
+  const addUser = (event) => {
+    event.preventDefault();
+    axios.post(USERS_ENDPOINT, { name: name, email: email, password: password })
+    .then(() => {  // if successful
+      setError('');
+      fetchUsers();
+    })
+    .catch((error) => { setError(error.response.data.message); });
   };
+
 
   return (
     <form>
@@ -48,21 +55,21 @@ function Users() {
   const [error, setError] = useState("");
   const[users, setUsers] = useState([]);
 
-  useEffect(
-    () => {
-      axios.get(USERS_ENDPOINT)
+  const fetchUsers = () => {
+    axios.get(USERS_ENDPOINT)
         // successfully connected
         .then((response) => {
           const usersObject = response.data.Data;
           const keys = Object.keys(usersObject);
           const usersArray = keys.map((key) => usersObject[key]);
           setUsers(usersArray);
-        }
-
-        )
+        })
         // failed connection
         .catch(() => { setError("Something went wrong"); });
-    },
+  };
+
+  useEffect(
+    fetchUsers,
     [],
   );
 
@@ -77,10 +84,10 @@ function Users() {
         </div>
       )}
 
-      <AddUserForm />
+      <AddUserForm setError={setError} fetchCategories={fetchUsers}/>
 
       {users.map((users) => (
-        <div className="users-container">
+        <div key={users.username} className="users-container">
           <h2>{users.username}</h2>
           <p>Email: {users.email} </p>
         </div>

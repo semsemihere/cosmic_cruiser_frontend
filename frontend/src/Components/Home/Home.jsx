@@ -61,7 +61,7 @@ function Home() {
   return (
     <div className="wrapper">
       <h1>
-        All Users
+        Welcome!
       </h1>
       {error && (
         <div className="error-message">
