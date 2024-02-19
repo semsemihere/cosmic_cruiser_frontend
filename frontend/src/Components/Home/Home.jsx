@@ -11,7 +11,6 @@ function AddUserForm() {
 
   const changeName = (event) => { setName(event.target.value); };
   const changeEmail = (event) => { setEmail(event.target.value); };
-  const changePassword = (event) => { setPassword(event.target.value); };
 
   const addUser = () => {
     
@@ -30,12 +29,6 @@ function AddUserForm() {
         Email
       </label>
       <input type="text" id="name" value={email} onChange={changeEmail}>
-      </input>
-
-      <label htmlFor='email'>
-        Password
-      </label>
-      <input type="text" id="name" value={password} onChange={changePassword}>
       </input>
       <button type="submit" onClick={addUser}>Submit</button>
     </form>

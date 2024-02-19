@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path="categories" element={<Categories />} />
         <Route path="users" element={<Users />} />
-        
+        <Route path="home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
