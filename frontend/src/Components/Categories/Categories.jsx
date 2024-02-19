@@ -88,10 +88,10 @@ function Categories() {
 
       <AddCategoryForm setError={setError} fetchCategories={fetchCategories}/>
 
-      {categories.map((categories) => (
-        <div className="categories-container">
-          <h2>{categories.name}</h2>
-          <p>ID: {categories.categoryID} <br></br> Sections: {categories.numSections} </p>
+      {categories.map((category) => (
+        <div key={category.name} className="categories-container">
+          <h2>{category.name}</h2>
+          <p>ID: {category.categoryID} <br></br> Sections: {category.numSections} </p>
         </div>
       ))
 
