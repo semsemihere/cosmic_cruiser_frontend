@@ -10,6 +10,7 @@ import './App.css';
 import Navbar from './Components/Navbar';
 import Categories from './Components/Categories';
 import Users from './Components/Users';
+import Home from './Components/Home';
 
 function App() {
   return (

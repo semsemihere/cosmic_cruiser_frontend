@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { BACKEND_URL } from '../../constants';
 
-const USERS_ENDPOINT = `${BACKEND_URL}/users`;
+const USERS_ENDPOINT = `${BACKEND_URL}/home`;
 
 function AddUserForm() {
   const [name, setName] = useState('')
@@ -36,19 +36,19 @@ function AddUserForm() {
 
 }
 
-function Users() {
+function Home() {
   const [error, setError] = useState("");
   const[users, setUsers] = useState([]);
 
   useEffect(
     () => {
-      axios.get(USERS_ENDPOINT)
+      axios.get(HOME_ENDPOINT)
         // successfully connected
         .then((response) => {
-          const usersObject = response.data.Data;
-          const keys = Object.keys(usersObject);
-          const usersArray = keys.map((key) => usersObject[key]);
-          setUsers(usersArray);
+          const homeObject = response.data.Data;
+          const keys = Object.keys(homeObject);
+          const homeArray = keys.map((key) => homeObject[key]);
+          setUsers(homeArray);
         }
 
         )
@@ -85,4 +85,4 @@ function Users() {
 
 }
 
-export default Users;
+export default Home;
