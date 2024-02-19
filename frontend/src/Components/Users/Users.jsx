@@ -8,6 +8,7 @@ const USERS_ENDPOINT = `${BACKEND_URL}/users`;
 function AddUserForm() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const changeName = (event) => { setName(event.target.value); };
   const changeEmail = (event) => { setEmail(event.target.value); };

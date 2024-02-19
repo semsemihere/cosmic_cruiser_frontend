@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { BACKEND_URL } from '../../constants';
 
-const USERS_ENDPOINT = `${BACKEND_URL}/home`;
+const HOME_ENDPOINT = `${BACKEND_URL}/home`;
 
 function AddUserForm() {
   const [name, setName] = useState('')
