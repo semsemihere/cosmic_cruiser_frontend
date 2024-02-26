@@ -5,37 +5,6 @@ import { BACKEND_URL } from '../../constants';
 
 const HOME_ENDPOINT = `${BACKEND_URL}/home`;
 
-function AddUserForm() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('');
-
-  const changeName = (event) => { setName(event.target.value); };
-  const changeEmail = (event) => { setEmail(event.target.value); };
-
-  const addUser = () => {
-    
-  };
-
-  return (
-    <form>
-
-      <label htmlFor='name'>
-        Name
-      </label>
-      <input type="text" id="name" value={name} onChange={changeName}>
-      </input>
-
-      <label htmlFor='email'>
-        Email
-      </label>
-      <input type="text" id="name" value={email} onChange={changeEmail}>
-      </input>
-      <button type="submit" onClick={addUser}>Submit</button>
-    </form>
-  );
-
-}
-
 function Home() {
   const [error, setError] = useState("");
   const[users, setUsers] = useState([]);
@@ -61,7 +30,7 @@ function Home() {
   return (
     <div className="wrapper">
       <h1>
-        Welcome!
+        Welcome to Jack of All Trades!
       </h1>
       {error && (
         <div className="error-message">
