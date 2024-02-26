@@ -7,25 +7,25 @@ const HOME_ENDPOINT = `${BACKEND_URL}/home`;
 
 function Home() {
   const [error, setError] = useState("");
-  const[users, setUsers] = useState([]);
+  // const[users, setUsers] = useState([]);
 
-  useEffect(
-    () => {
-      axios.get(HOME_ENDPOINT)
-        // successfully connected
-        .then((response) => {
-          const homeObject = response.data.Data;
-          const keys = Object.keys(homeObject);
-          const homeArray = keys.map((key) => homeObject[key]);
-          setUsers(homeArray);
-        }
+  // useEffect(
+  //   () => {
+  //     axios.get(HOME_ENDPOINT)
+  //       // successfully connected
+  //       .then((response) => {
+  //         const homeObject = response.data.Data;
+  //         const keys = Object.keys(homeObject);
+  //         const homeArray = keys.map((key) => homeObject[key]);
+  //         setUsers(homeArray);
+  //       }
 
-        )
-        // failed connection
-        .catch(() => { setError("Something went wrong"); });
-    },
-    [],
-  );
+  //       )
+  //       // failed connection
+  //       .catch(() => { setError("Something went wrong"); });
+  //   },
+  //   [],
+  // );
 
   return (
     <div className="wrapper">
