@@ -135,7 +135,7 @@ function Categories() {
     <div className="wrapper">
       <header>
         <h1>
-          All Categories
+          Add Category
         </h1>
         <button type='button' onClick={showAddCategoryForm}>
           Add a Category

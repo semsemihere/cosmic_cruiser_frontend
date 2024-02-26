@@ -76,7 +76,7 @@ function Users() {
   return (
     <div className="wrapper">
       <h1>
-        All Users
+        Add User
       </h1>
       {error && (
         <div className="error-message">
