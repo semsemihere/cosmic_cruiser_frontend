@@ -32,23 +32,14 @@ function Home() {
       <h1>
         Welcome to Jack of All Trades!
       </h1>
+      <p>
+        Jack of a Trades is a learning platform that is dedictated to helping people become more holistic people by expanding thier breadth of knowledge
+      </p>
       {error && (
         <div className="error-message">
           {error}
         </div>
-      )}
-
-      <AddUserForm />
-
-      {users.map((users) => (
-        <div className="users-container">
-          <h2>{users.username}</h2>
-          <p>Email: {users.email} </p>
-        </div>
-      ))
-
-      }
-      
+      )}      
     </div>
   )
 
