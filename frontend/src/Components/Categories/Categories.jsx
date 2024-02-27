@@ -81,7 +81,7 @@ ErrorMessage.propTypes = {
 function Category ({ category }) {
   const { name, categoryID, numSections} = category;
   return (
-    <div className='category-container'>
+    <div className='categories-container'>
       <h2>{name}</h2>
       <p>
         ID: {categoryID}
