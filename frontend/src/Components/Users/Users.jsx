@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import propTypes from 'prop-types'
+
 
 import { BACKEND_URL } from '../../constants';
 
 const USERS_ENDPOINT = `${BACKEND_URL}/users`;
 
-function AddUserForm({setError, fetchUsers}) {
+function AddUserForm({
+  visible,
+  cancel,
+  fetchUsers,
+  setError
+}) {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -40,6 +47,8 @@ function AddUserForm({setError, fetchUsers}) {
     })
     .catch((error) => { setError(error.response.data.message); });
   };
+
+  if (!visible) return null;
 
 
   // INFO TO CREATE USER: email, username, password, firstname, lastname, phonenumber
@@ -88,55 +97,122 @@ function AddUserForm({setError, fetchUsers}) {
       <input type="text" id="role" value={role} onChange={changeRole}>
       </input>
 
-      <button type="submit" onClick={addUser}>Submit</button>
+      <button type="button" onClick={cancel}>Cancel</button>
+      <button type="submit" onClick={addUser}>Add User</button>
     </form>
   );
 
 }
 
+AddUserForm.propTypes = {
+  visible: propTypes.bool.isRequired,
+  cancel: propTypes.func.isRequired,
+  fetchUsers: propTypes.func.isRequired,
+  setError: propTypes.func.isRequired,
+}
+
+function ErrorMessage({ message }) {
+  return (
+    <div className='error-message'>
+      {message}
+    </div>
+  );
+}
+ErrorMessage.propTypes = {
+  message: propTypes.string.isRequired,
+};
+
+// INFO TO CREATE USER: email, username, password, firstname, lastname, phonenumber
+function User ({ user }) {
+  const { email, username, password, firstname, lastname, phonenumber} = user;
+  return (
+    <div className='users-container'>
+      <h2>{username}</h2>
+      <p>
+        email: {email}
+      </p>
+    </div>
+  );
+}
+
+User.propTypes = {
+  user: propTypes.shape({
+    email: propTypes.string.isRequired,
+    username: propTypes.string.isRequired,
+    password: propTypes.string.isRequired,
+    firstname: propTypes.string.isRequired,
+    lastname: propTypes.string.isRequired,
+    phonenumber: propTypes.number.isRequired,
+  }).isRequired,
+};
+
+function usersObjectToArray({ Data }) {
+  const keys = Object.keys(Data);
+  const users = keys.map((key) => Data[key]);
+  return users;
+}
+
 function Users() {
   const [error, setError] = useState("");
   const[users, setUsers] = useState([]);
+  const [addingUser, setAddingUser] = useState(false);
 
   const fetchUsers = () => {
     axios.get(USERS_ENDPOINT)
+        .then(({ data }) => setUsers(usersObjectToArray(data)))
+        .catch(() => setError('There was a problem getting the list of users'));
         // successfully connected
-        .then((response) => {
-          const usersObject = response.data.Data;
-          const keys = Object.keys(usersObject);
-          const usersArray = keys.map((key) => usersObject[key]);
-          setUsers(usersArray);
-        })
-        // failed connection
-        .catch(() => { setError("Something went wrong"); });
+        // .then((response) => {
+        //   const usersObject = response.data.Data;
+        //   const keys = Object.keys(usersObject);
+        //   const usersArray = keys.map((key) => usersObject[key]);
+        //   setUsers(usersArray);
+        // })
+        // // failed connection
+        // .catch(() => { setError("Something went wrong"); });
   };
 
-  useEffect(
-    fetchUsers,
-    [],
-  );
+  const showAddUserForm = () => { setAddingUser(true); };
+  const hideAddUserForm = () => { setAddingUser(false); };
+
+  useEffect(fetchUsers,[]);
 
   return (
     <div className="wrapper">
-      <h1>
-        Add User
-      </h1>
+      <header>
+        <h1>
+          Add User
+        </h1>
+        <button type='button' onClick={showAddUserForm}>
+            Add a User
+        </button>
+      </header>
+
+      <AddUserForm
+        visible={addingUser}
+        cancel={hideAddUserForm}
+        fetchUsers={fetchUsers}
+        setError={setError}
+      />
+      
       {error && (
         <div className="error-message">
           {error}
         </div>
       )}
 
-      <AddUserForm setError={setError} fetchCategories={fetchUsers}/>
+      {users.map((user) => <User key={user.username} user={user} />)}
 
-      {users.map((users) => (
+      {/* <AddUserForm setError={setError} fetchCategories={fetchUsers}/> */}
+
+      {/* {users.map((users) => (
         <div key={users.username} className="users-container">
           <h2>{users.username}</h2>
           <p>Email: {users.email} </p>
         </div>
       ))
 
-      }
+      } */}
       
     </div>
   )
