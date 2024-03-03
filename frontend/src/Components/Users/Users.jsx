@@ -49,7 +49,7 @@ function AddUserForm({
         <label htmlFor='email'>
           Email
         </label>
-        <input type="text" id="name" value={email} onChange={changeEmail}>
+        <input type="email" id="name" value={email} onChange={changeEmail} pattern=".+@example\.com" >
         </input>
 
         <label htmlFor='firstname'>
@@ -120,7 +120,6 @@ ErrorMessage.propTypes = {
   message: propTypes.string.isRequired,
 };
 
-// INFO TO CREATE USER: email, username, password, firstname, lastname, phonenumber
 function User ({ user }) {
   const { email, username} = user;
   return (
@@ -147,8 +146,20 @@ User.propTypes = {
 function usersObjectToArray({ Data }) {
   const keys = Object.keys(Data);
   const users = keys.map((key) => Data[key]);
+  console.log("USERS: ", users)
   return users;
 }
+
+// Email and Password is used to log in 
+function UserLogin({ email, password, Data }){
+  for(var i = 0; i < Object.keys(Data).length; i++){
+    if( Data[i]['email'] == email && Data[i]['password'] == password){
+      return true; 
+    }
+  }
+  return false;
+}
+
 
 function Users() {
   const [error, setError] = useState("");
