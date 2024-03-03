@@ -32,7 +32,6 @@ function AddCategoryForm({
 
   if (!visible) return null;
 
-
   return (
     <form>
 
@@ -109,6 +108,7 @@ function Categories() {
   const [error, setError] = useState("");
   const[categories, setCategories] = useState([]);
   const [addingCategory, setAddingCategory] = useState(false);
+  const [deletingCategory, setDeletingCategory] = useState(false);
 
   const fetchCategories = () => {
     axios.get(CATEGORIES_ENDPOINT)
@@ -125,9 +125,20 @@ function Categories() {
         // .catch(() => { setError("Something went wrong"); });
   };
 
+  function DeleteCategoryForm({
+    visible,
+    cancel,
+    fetchCategories,
+    setError,
+  }) {
+    const [categoryID, setID] = useState('');
+    const changeID = (event) => { setID(event.target.value); };
+  };
+
   const showAddCategoryForm = () => { setAddingCategory(true); };
   const hideAddCategoryForm = () => { setAddingCategory(false); };
-
+  const showDeleteCategoryForm = () => { setDeletingCategory(true); };
+  const hideDeleteCategoryForm = () => { setDeletingCategory(false); };
 
   useEffect(fetchCategories,[]);
 
@@ -135,10 +146,13 @@ function Categories() {
     <div className="wrapper">
       <header>
         <h1>
-          Add Category
+          Categories
         </h1>
         <button type='button' onClick={showAddCategoryForm}>
-          Add a Category
+          Add Category
+        </button>
+        <button type='button' onClick={showDeleteCategoryForm}>
+          Delete Category
         </button>
       </header>
       <AddCategoryForm
