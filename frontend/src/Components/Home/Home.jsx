@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import AddCategoryForm from '../Categories/Categories'
 
 import { BACKEND_URL } from '../../constants';
 
@@ -19,7 +20,6 @@ function Home() {
   //         const homeArray = keys.map((key) => homeObject[key]);
   //         setUsers(homeArray);
   //       }
-
   //       )
   //       // failed connection
   //       .catch(() => { setError("Something went wrong"); });

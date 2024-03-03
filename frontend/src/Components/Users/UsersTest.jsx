@@ -1,6 +1,8 @@
+// Working ver (j for backup if needed)
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import propTypes from 'prop-types'
+
 
 import { BACKEND_URL } from '../../constants';
 
@@ -28,6 +30,14 @@ function AddUserForm({
   const changePhone = (event) => { setPhone(event.target.value); };
   const changeRole = (event) => { setRole(event.target.value); };
 
+  // FROM BACKEND:
+  // new_user = users.create_user(
+  //   email, username,
+  //   password, firstname,
+  //   lastname, phonenumber
+  // )
+  // INFO TO CREATE USER: email, username, password, firstname, lastname, phonenumber
+
   const addUser = (event) => {
     event.preventDefault();
     axios.post(USERS_ENDPOINT, { email: email, username: username, password: password, 
@@ -45,58 +55,51 @@ function AddUserForm({
   // INFO TO CREATE USER: email, username, password, firstname, lastname, phonenumber
   return (
     <form>
-      <div class="column">
-        <label htmlFor='email'>
-          Email
-        </label>
-        <input type="text" id="name" value={email} onChange={changeEmail}>
-        </input>
 
-        <label htmlFor='firstname'>
-          First Name
-        </label>
-        <input type="text" id="firstname" value={firstname} onChange={changeFirstName}>
-        </input>
+      <label htmlFor='email'>
+        Email
+      </label>
+      <input type="text" id="name" value={email} onChange={changeEmail}>
+      </input>
 
-        <label htmlFor='password'>
-          Password
-        </label>
-        <input type="text" id="password" value={password} onChange={changePassword}>
-        </input>
+      <label htmlFor='username'>
+        Username
+      </label>
+      <input type="text" id="username" value={username} onChange={changeUsername}>
+      </input>
 
-        <label htmlFor='role'>
-          Role
-        </label>
-        <input type="text" id="role" value={role} onChange={changeRole}>
-        </input>
+      <label htmlFor='password'>
+        Password
+      </label>
+      <input type="text" id="password" value={password} onChange={changePassword}>
+      </input>
 
+      <label htmlFor='firstname'>
+        First Name
+      </label>
+      <input type="text" id="firstname" value={firstname} onChange={changeFirstName}>
+      </input>
 
-      </div>
+      <label htmlFor='lastname'>
+        Last Name
+      </label>
+      <input type="text" id="lastname" value={lastname} onChange={changeLastName}>
+      </input>
 
-      <div class="column">
-        <label htmlFor='username'>
-          Username
-        </label>
-        <input type="text" id="username" value={username} onChange={changeUsername}>
-        </input>
+      <label htmlFor='phonenumber'>
+        Phone Number
+      </label>
+      <input type="number" id="phonenumber" value={phonenumber} onChange={changePhone}>
+      </input>
 
-        <label htmlFor='lastname'>
-          Last Name
-        </label>
-        <input type="text" id="lastname" value={lastname} onChange={changeLastName}>
-        </input>
+      <label htmlFor='role'>
+        Role
+      </label>
+      <input type="text" id="role" value={role} onChange={changeRole}>
+      </input>
 
-        <label htmlFor='phonenumber'>
-          Phone Number (Format: 123-456-7890)
-        </label>
-        <input type="tel" id="phonenumber" value={phonenumber} name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" onChange={changePhone} required >
-        </input>
-
-        <button type="button" onClick={cancel}>Cancel</button>
-        <button type="submit" onClick={addUser}>Sign Up</button>
-
-        
-      </div>
+      <button type="button" onClick={cancel}>Cancel</button>
+      <button type="submit" onClick={addUser}>Add User</button>
     </form>
   );
 
@@ -122,7 +125,7 @@ ErrorMessage.propTypes = {
 
 // INFO TO CREATE USER: email, username, password, firstname, lastname, phonenumber
 function User ({ user }) {
-  const { email, username} = user;
+  const { email, username, password, firstname, lastname, phonenumber} = user;
   return (
     <div className='users-container'>
       <h2>{username}</h2>
@@ -159,6 +162,15 @@ function Users() {
     axios.get(USERS_ENDPOINT)
         .then(({ data }) => setUsers(usersObjectToArray(data)))
         .catch(() => setError('There was a problem getting the list of users'));
+        // successfully connected
+        // .then((response) => {
+        //   const usersObject = response.data.Data;
+        //   const keys = Object.keys(usersObject);
+        //   const usersArray = keys.map((key) => usersObject[key]);
+        //   setUsers(usersArray);
+        // })
+        // // failed connection
+        // .catch(() => { setError("Something went wrong"); });
   };
 
   const showAddUserForm = () => { setAddingUser(true); };
@@ -191,6 +203,17 @@ function Users() {
       )}
 
       {users.map((user) => <User key={user.username} user={user} />)}
+
+      {/* <AddUserForm setError={setError} fetchCategories={fetchUsers}/> */}
+
+      {/* {users.map((users) => (
+        <div key={users.username} className="users-container">
+          <h2>{users.username}</h2>
+          <p>Email: {users.email} </p>
+        </div>
+      ))
+
+      } */}
       
     </div>
   )
