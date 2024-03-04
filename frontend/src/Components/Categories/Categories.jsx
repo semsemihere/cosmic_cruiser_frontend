@@ -5,6 +5,7 @@ import axios from 'axios';
 import { BACKEND_URL } from '../../constants';
 
 const CATEGORIES_ENDPOINT = `${BACKEND_URL}/categories`;
+const DELETE_CATEGORIES_ENDPOINT = `${BACKEND_URL}/categories/delete`;
 
 function AddCategoryForm({ 
   visible,
@@ -133,6 +134,16 @@ function Categories() {
   }) {
     const [categoryID, setID] = useState('');
     const changeID = (event) => { setID(event.target.value); };
+
+    // const deleteCategory = (event) => {
+      // event.preventDefault();
+      // axios.delete(DELETE_CATEGORIES_ENDPOINT/categoryID, { categoryID: categoryIDs })
+      // .then(() => {  // if successful
+      //   setError('');
+      //   fetchCategories();
+      // })
+      // .catch((error) => { setError(error.response.data.message); });
+
   };
 
   const showAddCategoryForm = () => { setAddingCategory(true); };
@@ -158,6 +169,12 @@ function Categories() {
       <AddCategoryForm
         visible={addingCategory}
         cancel={hideAddCategoryForm}
+        fetchCategories={fetchCategories}
+        setError={setError}
+      />
+      <DeleteCategoryForm
+        visible={deletingCategory}
+        cancel={hideDeleteCategoryForm}
         fetchCategories={fetchCategories}
         setError={setError}
       />
