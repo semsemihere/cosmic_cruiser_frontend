@@ -34,6 +34,7 @@ function Home() {
       </h1>
       <p>
         Jack of a Trades is a learning platform that is dedictated to helping people become more holistic people by expanding thier breadth of knowledge
+        Oour categories range from everything from medical advice to finance tips
       </p>
       {error && (
         <div className="error-message">
