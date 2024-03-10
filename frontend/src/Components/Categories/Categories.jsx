@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import propTypes from 'prop-types'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import { BACKEND_URL } from '../../constants';
 
@@ -118,16 +119,23 @@ ErrorMessage.propTypes = {
 
 function Category ({ category }) {
   const { name, categoryID, numSections} = category;
+  
   return (
     <div className='categories-container'>
-      <h2>{name}</h2>
+
+      <Link to={`/categories/${name}`}>
+        <h2>{name}</h2>
+      </Link>
+            
       <p>
         ID: {categoryID}
         <br></br>
         Sections: {numSections}
       </p>
+
     </div>
   );
+
 }
 Category.propTypes = {
   category: propTypes.shape({
