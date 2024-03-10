@@ -39,20 +39,20 @@ function AddCategoryForm({
       <label htmlFor='name'>
         Name
       </label>
-      <input required type="text" id="name" value={name} onChange={changeName}>
-      </input>
+
+      <input required type="text" id="name" value={name} onChange={changeName} />
 
       <label htmlFor='categoryID'>
         Category ID
       </label>
-      <input required type="text" id="categoryID" value={categoryID} onChange={changeID}>
-      </input>
+      
+      <input required type="text" id="categoryID" value={categoryID} onChange={changeID} />
 
       <label htmlFor='numSections'>
         Number of Sections
       </label>
-      <input required type="number" id="numSections" value={numSections} onChange={changeNumberOfSections}>
-      </input>
+
+      <input required type="number" id="numSections" value={numSections} onChange={changeNumberOfSections} />
 
       <button type="button" onClick={cancel}>Cancel</button>
       <button type="submit" onClick={addCategory}>Add Category</button>
@@ -60,6 +60,44 @@ function AddCategoryForm({
   );
 
 }
+
+function DeleteCategoryForm({
+  visible,
+  cancel,
+  fetchCategories,
+  setError,
+}) {
+  const [categoryID, setID] = useState('');
+
+  const changeID = (event) => { setID(event.target.value); };
+
+  const deleteCategory = () => {
+    // event.preventDefault();
+    axios.delete(`${DELETE_CATEGORIES_ENDPOINT}/${categoryID}`)
+    .then(() => {  // if successful
+      setError('');
+      fetchCategories();
+    })
+    .catch((error) => { setError(error.response.data.message);});
+  }
+
+  if (!visible) return null;
+
+  return (
+    <form>
+
+      <label htmlFor='categoryID'>
+        Category ID
+      </label>
+      
+      <input required type="text" id="categoryID" value={categoryID} onChange={changeID} />
+
+      <button type="button" onClick={cancel}>Cancel</button>
+      <button type="submit" onClick={deleteCategory}>Delete Category</button>
+    </form>
+  );
+}
+
 AddCategoryForm.propTypes = {
   visible: propTypes.bool.isRequired,
   cancel: propTypes.func.isRequired,
@@ -126,26 +164,6 @@ function Categories() {
         // .catch(() => { setError("Something went wrong"); });
   };
 
-  function DeleteCategoryForm({
-    visible,
-    cancel,
-    fetchCategories,
-    setError,
-  }) {
-    const [categoryID, setID] = useState('');
-    const changeID = (event) => { setID(event.target.value); };
-
-    // const deleteCategory = (event) => {
-      // event.preventDefault();
-      // axios.delete(DELETE_CATEGORIES_ENDPOINT/categoryID, { categoryID: categoryIDs })
-      // .then(() => {  // if successful
-      //   setError('');
-      //   fetchCategories();
-      // })
-      // .catch((error) => { setError(error.response.data.message); });
-
-  };
-
   const showAddCategoryForm = () => { setAddingCategory(true); };
   const hideAddCategoryForm = () => { setAddingCategory(false); };
   const showDeleteCategoryForm = () => { setDeletingCategory(true); };
@@ -156,34 +174,42 @@ function Categories() {
   return (
     <div className="wrapper">
       <header>
+
         <h1>
           Categories
         </h1>
+
         <button type='button' onClick={showAddCategoryForm}>
           Add Category
         </button>
+        
         <button type='button' onClick={showDeleteCategoryForm}>
           Delete Category
         </button>
+
       </header>
+
       <AddCategoryForm
         visible={addingCategory}
         cancel={hideAddCategoryForm}
         fetchCategories={fetchCategories}
         setError={setError}
       />
+
       <DeleteCategoryForm
         visible={deletingCategory}
         cancel={hideDeleteCategoryForm}
         fetchCategories={fetchCategories}
         setError={setError}
       />
+
       {error && <ErrorMessage message={error} /> }
       {/* (
         <div className="error-message">
           {error}
         </div>
       )} */}
+
       {categories.map((category) => <Category key={category.name} category={category} />)}
 
       {/* <AddCategoryForm setError={setError} fetchCategories={fetchCategories}/> */}
