@@ -4,6 +4,9 @@ import propTypes from 'prop-types'
 
 import { BACKEND_URL } from '../../constants';
 
+import { Link } from 'react-router-dom';
+
+
 const USERS_ENDPOINT = `${BACKEND_URL}/users`;
 
 function AddUserForm({
@@ -124,7 +127,11 @@ function User ({ user }) {
   const { email, username} = user;
   return (
     <div className='users-container'>
-      <h2>{username}</h2>
+      <Link to={`/users/${username}`}>
+        <h2>{username}</h2>
+      </Link>
+
+      {/* <h2>{username}</h2> */}
       <p>
         email: {email}
       </p>
