@@ -168,7 +168,7 @@ nav a:focus {
   outline: none;
 }
 
-.categories-container {
+.categories-container, .nutrition-container {
   border: 2px solid var(--accent-color);
   margin: 1rem 0;
   padding: 2rem;
@@ -178,7 +178,9 @@ nav a:focus {
 }
 
 .categories-container p,
-.categories-container h2 {
+.categories-container h2,
+.nutrition-container p,
+.nutrition-container h2 {
   margin: 0;
   font-size: 1.5rem;
 }
