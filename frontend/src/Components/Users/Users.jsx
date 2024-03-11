@@ -158,14 +158,14 @@ function usersObjectToArray({ Data }) {
 }
 
 // Email and Password is used to log in 
-function UserLogin({ email, password, Data }){
-  for(var i = 0; i < Object.keys(Data).length; i++){
-    if( Data[i]['email'] == email && Data[i]['password'] == password){
-      return true; 
-    }
-  }
-  return false;
-}
+// function UserLogin({ email, password, Data }){
+//   for(var i = 0; i < Object.keys(Data).length; i++){
+//     if( Data[i]['email'] == email && Data[i]['password'] == password){
+//       return true; 
+//     }
+//   }
+//   return false;
+// }
 
 
 function Users() {
