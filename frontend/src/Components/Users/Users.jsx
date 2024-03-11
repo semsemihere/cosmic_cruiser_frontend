@@ -158,20 +158,68 @@ function usersObjectToArray({ Data }) {
 }
 
 // Email and Password is used to log in 
-// function UserLogin({ email, password, Data }){
-//   for(var i = 0; i < Object.keys(Data).length; i++){
-//     if( Data[i]['email'] == email && Data[i]['password'] == password){
-//       return true; 
-//     }
-//   }
-//   return false;
-// }
+function LoginUserForm({
+  visible,
+  cancel,
+  fetchUsers,
+  setError
+})
+{
+  const [email, getEmail] = useState('');
+  const [password, getPassword] = useState('');
+
+  const checkEmail = (event) => { getEmail(event.target.value);};
+  const checkPassword = (event) => { getPassword(event.target.value);};
+
+
+  const checkUser = (event) => {
+    event.preventDefault();
+    axios.post(USERS_ENDPOINT, { email: email, password: password })
+    .then(() => {  // if successful
+      setError('');
+      fetchUsers();
+    })
+    .catch((error) => { setError(error.response.data.message); });
+  };
+
+  if (!visible) return null;
+  
+  return (
+    <form>
+      <div class="column">
+        <label htmlFor='email'>
+          Email
+        </label>
+        <input type="email" id="name" value={email} onChange={checkEmail} pattern=".+@example\.com" >
+        </input>
+
+        <label htmlFor='password'>
+          Password
+        </label>
+        <input type="text" id="password" value={password} onChange={checkPassword}>
+        </input>
+
+        <button type="button" onClick={cancel}>Cancel</button>
+        <button type="submit" onClick={checkUser}>Sign In</button>
+      </div>
+    </form>
+  )
+}
+
+
+LoginUserForm.propTypes = {
+  visible: propTypes.bool.isRequired,
+  cancel: propTypes.func.isRequired,
+  fetchUsers: propTypes.func.isRequired,
+  setError: propTypes.func.isRequired,
+}
 
 
 function Users() {
   const [error, setError] = useState("");
   const[users, setUsers] = useState([]);
   const [addingUser, setAddingUser] = useState(false);
+  const [loginUser, setLoginUser] = useState(false);
 
   const fetchUsers = () => {
     axios.get(USERS_ENDPOINT)
@@ -181,6 +229,8 @@ function Users() {
 
   const showAddUserForm = () => { setAddingUser(true); };
   const hideAddUserForm = () => { setAddingUser(false); };
+  const showLoginUserForm = () => { setLoginUser(true); }
+  const hideLoginUserForm = () => { setLoginUser(false); }
 
   useEffect(fetchUsers,[]);
 
@@ -193,11 +243,21 @@ function Users() {
         <button type='button' onClick={showAddUserForm}>
             Sign Up
         </button>
+        <button type='button' onClick={showLoginUserForm}>
+            Sign In
+        </button>
       </header>
 
       <AddUserForm
         visible={addingUser}
         cancel={hideAddUserForm}
+        fetchUsers={fetchUsers}
+        setError={setError}
+      />
+
+      <LoginUserForm
+        visible={loginUser}
+        cancel={hideLoginUserForm}
         fetchUsers={fetchUsers}
         setError={setError}
       />
