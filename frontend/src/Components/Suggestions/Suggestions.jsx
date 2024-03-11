@@ -4,8 +4,8 @@ import axios from 'axios';
 
 import { BACKEND_URL } from '../../constants';
 
-const CATEGORIES_ENDPOINT = `${BACKEND_URL}/suggestions`;
-const DELETE_CATEGORIES_ENDPOINT = `${BACKEND_URL}/suggestions/delete`;
+const SUGGESTIONS_ENDPOINT = `${BACKEND_URL}/suggestions`;
+const DELETE_SUGGESTIONS_ENDPOINT = `${BACKEND_URL}/suggestions/delete`;
 
 function AddSuggestionForm({ 
   visible,
@@ -23,7 +23,7 @@ function AddSuggestionForm({
 
   const addSuggestion = (event) => {
     event.preventDefault();
-    axios.post(CATEGORIES_ENDPOINT, { name: name, suggestionID: suggestionID, numSections: numSections })
+    axios.post(SUGGESTIONS_ENDPOINT, { name: name, suggestionID: suggestionID, numSections: numSections })
     .then(() => {  // if successful
       setError('');
       fetchSuggestions();
@@ -39,23 +39,6 @@ function AddSuggestionForm({
       <label htmlFor='name'>
         Name
       </label>
-      <input required type="text" id="name" value={name} onChange={changeName}>
-      </input>
-
-      <label htmlFor='suggestionID'>
-        Suggestion ID
-      </label>
-      <input required type="text" id="suggestionID" value={suggestionID} onChange={changeID}>
-      </input>
-
-      <label htmlFor='numSections'>
-        Number of Sections
-      </label>
-      <input required type="number" id="numSections" value={numSections} onChange={changeNumberOfSections}>
-      </input>
-
-      <button type="button" onClick={cancel}>Cancel</button>
-      <button type="submit" onClick={addSuggestion}>Add Suggestion</button>
     </form>
   );
 
@@ -112,7 +95,7 @@ function Suggestions() {
   const [deletingSuggestion, setDeletingSuggestion] = useState(false);
 
   const fetchSuggestions = () => {
-    axios.get(CATEGORIES_ENDPOINT)
+    axios.get(SUGGESTIONS_ENDPOINT)
         // successfully connected
         .then(({ data }) => setSuggestions(suggestionsObjectToArray(data)))
         .catch(() => setError('There was a problem getting the list of suggestions'));
@@ -137,7 +120,7 @@ function Suggestions() {
 
     // const deleteSuggestion = (event) => {
       // event.preventDefault();
-      // axios.delete(DELETE_CATEGORIES_ENDPOINT/suggestionID, { suggestionID: suggestionIDs })
+      // axios.delete(DELETE_SUGGESTIONS_ENDPOINT/suggestionID, { suggestionID: suggestionIDs })
       // .then(() => {  // if successful
       //   setError('');
       //   fetchSuggestions();
