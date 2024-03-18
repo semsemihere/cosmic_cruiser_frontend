@@ -62,6 +62,9 @@ ErrorMessage.propTypes = {
 };
 
 function Suggestion ({ suggestion }) {
+  if (!suggestions) {
+    return <div>Suggestions from community members...</div>;
+  }
   const { name, suggestionID, numSections} = suggestion;
   return (
     <div className='suggestions-container'>

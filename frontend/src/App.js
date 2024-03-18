@@ -24,7 +24,7 @@ function App() {
         <Route path="categories" element={<Categories />} />
         <Route path="users" element={<Users />} />
         <Route path="home" element={<Home />} />
-        <Route path="categories/nutrition" element={<Users />} />
+        <Route path="categories/nutrition" element={<Nutrition />} />
         <Route path="categories/emergency_medical_services" element={<Users />} />
         <Route path="categories/finances" element={<Users />} />
       </Routes>
