@@ -11,9 +11,9 @@ import Navbar from './Components/Navbar';
 import Categories from './Components/Categories';
 import Users from './Components/Users';
 import Home from './Components/Home';
-// import Nutrition from './Components/Nutrition';
-// import EMS from './Components/EMS';
-// import Finances from './Components/Finances';
+import Nutrition from './Components/Nutrition';
+import EMS from './Components/EMS';
+import Finances from './Components/Finances';
 
 
 function App() {
