@@ -36,27 +36,28 @@ function AddCategoryForm({
 
   return (
     <form>
+      <div class="column">
+        <label htmlFor='name'>
+          Name
+        </label>
 
-      <label htmlFor='name'>
-        Name
-      </label>
+        <input required type="text" id="name" value={name} onChange={changeName} />
 
-      <input required type="text" id="name" value={name} onChange={changeName} />
+        <label htmlFor='categoryID'>
+          Category ID
+        </label>
+        
+        <input required type="text" id="categoryID" value={categoryID} onChange={changeID} />
 
-      <label htmlFor='categoryID'>
-        Category ID
-      </label>
-      
-      <input required type="text" id="categoryID" value={categoryID} onChange={changeID} />
+        <label htmlFor='numSections'>
+          Number of Sections
+        </label>
 
-      <label htmlFor='numSections'>
-        Number of Sections
-      </label>
+        <input required type="number" id="numSections" value={numSections} onChange={changeNumberOfSections} />
 
-      <input required type="number" id="numSections" value={numSections} onChange={changeNumberOfSections} />
-
-      <button type="button" onClick={cancel}>Cancel</button>
-      <button type="submit" onClick={addCategory}>Add Category</button>
+        <button type="button" onClick={cancel}>Cancel</button>
+        <button type="submit" onClick={addCategory}>Add Category</button>
+      </div>
     </form>
   );
 
@@ -73,7 +74,11 @@ function DeleteCategoryForm({
   const changeID = (event) => { setID(event.target.value); };
 
   const deleteCategory = () => {
-    // event.preventDefault();
+    if (!categoryID) {
+      setError('Category ID is required!');
+      return;
+    }
+    
     axios.delete(`${DELETE_CATEGORIES_ENDPOINT}/${categoryID}`)
     .then(() => {  // if successful
       setError('');
@@ -86,7 +91,7 @@ function DeleteCategoryForm({
 
   return (
     <form>
-
+      <div class="column">
       <label htmlFor='categoryID'>
         Category ID
       </label>
@@ -95,6 +100,7 @@ function DeleteCategoryForm({
 
       <button type="button" onClick={cancel}>Cancel</button>
       <button type="submit" onClick={deleteCategory}>Delete Category</button>
+      </div>
     </form>
   );
 }

@@ -67,10 +67,10 @@ function DeleteNutritionForm({
   }) {
 
     const [sectionID, setSectionID] = useState('');
-    const changeID = (event) => { setSectionID(event.target.value); };
+    const changeSectionID = (event) => { setSectionID(event.target.value); };
 
     const deleteNutrition = () => {
-        axios.delete(`${DELETE_NUTRITION_ENDPOINTs}/${sectionID}`)
+        axios.delete(`${DELETE_NUTRITION_ENDPOINT}/${sectionID}`)
         .then(() => {  // if successful
             setError('');
             fetchNutritionSections();
