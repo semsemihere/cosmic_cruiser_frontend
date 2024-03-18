@@ -4,7 +4,7 @@ import propTypes from 'prop-types'
 
 import { BACKEND_URL } from '../../constants';
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 
 const USERS_ENDPOINT = `${BACKEND_URL}/users`;
@@ -127,9 +127,9 @@ function User ({ user }) {
   const { email, username} = user;
   return (
     <div className='users-container'>
-      <Link to={`/users/${username}`}>
-        <h2>{username}</h2>
-      </Link>
+      <h2>{username}</h2>
+      {/* <Link to={`/users/${username}`}>
+      </Link> */}
 
       {/* <h2>{username}</h2> */}
       <p>

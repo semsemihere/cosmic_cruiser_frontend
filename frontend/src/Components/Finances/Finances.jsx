@@ -77,48 +77,48 @@ Finances.propTypes = {
   }).isRequired,
 };
 
-function financesObjectToArray({ Data }) {
-  const keys = Object.keys(Data);
-  const finances = keys.map((key) => Data[key]);
-  return finances;
-}
+// function financesObjectToArray({ Data }) {
+//   const keys = Object.keys(Data);
+//   const finances = keys.map((key) => Data[key]);
+//   return finances;
+// }
 
-function Financess() {
-  const [error, setError] = useState('');
-  const [finances, setFinancess] = useState([]);
-  const [addingFinances, setAddingFinances] = useState(false);
+// function Financess() {
+//   const [error, setError] = useState('');
+//   const [finances, setFinancess] = useState([]);
+//   const [addingFinances, setAddingFinances] = useState(false);
 
-  const fetchFinances = () => {
-    axios.get(FINANCES_ENDPOINT)
-      .then(({ data }) => setFinancess(financesObjectToArray(data)))
-      .catch(() => setError('There was a problem retrieving the list of finances.'));
-  };
+//   const fetchFinances = () => {
+//     axios.get(FINANCES_ENDPOINT)
+//       .then(({ data }) => setFinancess(financesObjectToArray(data)))
+//       .catch(() => setError('There was a problem retrieving the list of finances.'));
+//   };
 
-  const showAddFinancesForm = () => { setAddingFinances(true); };
-  const hideAddFinancesForm = () => { setAddingFinances(false); };
+//   const showAddFinancesForm = () => { setAddingFinances(true); };
+//   const hideAddFinancesForm = () => { setAddingFinances(false); };
 
-  useEffect(fetchFinances, []);
+//   useEffect(fetchFinances, []);
 
-  return (
-    <div className="wrapper">
-      <header>
-        <h1>
-          View All Financess
-        </h1>
-        <button type="button" onClick={showAddFinancesForm}>
-          Add a Finances
-        </button>
-      </header>
-      <AddFinancesForm
-        visible={addingFinances}
-        cancel={hideAddFinancesForm}
-        fetchFinances={fetchFinances}
-        setError={setError}
-      />
-      {error && <ErrorMessage message={error} />}
-      {finances.map((finances) => <Finances key={finances.name} finances={finances} />)}
-    </div>
-  );
-}
+//   return (
+//     <div className="wrapper">
+//       <header>
+//         <h1>
+//           View All Financess
+//         </h1>
+//         <button type="button" onClick={showAddFinancesForm}>
+//           Add a Finances
+//         </button>
+//       </header>
+//       <AddFinancesForm
+//         visible={addingFinances}
+//         cancel={hideAddFinancesForm}
+//         fetchFinances={fetchFinances}
+//         setError={setError}
+//       />
+//       {error && <ErrorMessage message={error} />}
+//       {finances.map((finances) => <Finances key={finances.name} finances={finances} />)}
+//     </div>
+//   );
+// }
 
 export default Finances;

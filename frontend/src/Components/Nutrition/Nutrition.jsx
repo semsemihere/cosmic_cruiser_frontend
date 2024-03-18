@@ -150,68 +150,68 @@ function nutritionsObjectToArray({ Data }) {
 }
   
 
-function Nutritions() {
-    const [error, setError] = useState("");
-    const[nutritions, setNutritions] = useState([]);
-    const [addingNutrition, setAddingNutrition] = useState(false);
-    const [deletingNutrition, setDeletingNutrition] = useState(false);
+// function Nutritions() {
+//     const [error, setError] = useState("");
+//     const[nutritions, setNutritions] = useState([]);
+//     const [addingNutrition, setAddingNutrition] = useState(false);
+//     const [deletingNutrition, setDeletingNutrition] = useState(false);
 
-    const fetchNutritionSections = () => {
-      axios.get(NUTRITION_ENDPOINT)
-          // successfully connected
-          .then(({ data }) => setNutritions(nutritionsObjectToArray(data)))
-          .catch(() => setError('There was a problem getting the list of nutritions'));
+//     const fetchNutritionSections = () => {
+//       axios.get(NUTRITION_ENDPOINT)
+//           // successfully connected
+//           .then(({ data }) => setNutritions(nutritionsObjectToArray(data)))
+//           .catch(() => setError('There was a problem getting the list of nutritions'));
 
-    };
+//     };
   
-    const showAddNutritionForm = () => { setAddingNutrition(true); };
-    const hideAddNutritionForm = () => { setAddingNutrition(false); };
-    const showDeleteNutritionForm = () => { setDeletingNutrition(true); };
-    const hideDeleteNutritionForm = () => { setDeletingNutrition(false); };
+//     const showAddNutritionForm = () => { setAddingNutrition(true); };
+//     const hideAddNutritionForm = () => { setAddingNutrition(false); };
+//     const showDeleteNutritionForm = () => { setDeletingNutrition(true); };
+//     const hideDeleteNutritionForm = () => { setDeletingNutrition(false); };
   
-    useEffect(fetchNutritionSections,[]);
+//     useEffect(fetchNutritionSections,[]);
   
-    return (
-      <div className="wrapper">
-        <header>
+//     return (
+//       <div className="wrapper">
+//         <header>
   
-          <h1>
-            Nutrition Sections
-          </h1>
+//           <h1>
+//             Nutrition Sections
+//           </h1>
   
-          <button type='button' onClick={showAddNutritionForm}>
-            Add Nutrition Section
-          </button>
+//           <button type='button' onClick={showAddNutritionForm}>
+//             Add Nutrition Section
+//           </button>
           
-          <button type='button' onClick={showDeleteNutritionForm}>
-            Delete Nutrition Section
-          </button>
+//           <button type='button' onClick={showDeleteNutritionForm}>
+//             Delete Nutrition Section
+//           </button>
   
-        </header>
+//         </header>
   
-        <AddNutritionForm
-          visible={addingNutrition}
-          cancel={hideAddNutritionForm}
-          fetchNutritionSections={fetchNutritionSections}
-          setError={setError}
-        />
+//         <AddNutritionForm
+//           visible={addingNutrition}
+//           cancel={hideAddNutritionForm}
+//           fetchNutritionSections={fetchNutritionSections}
+//           setError={setError}
+//         />
   
-        <DeleteNutritionForm
-          visible={deletingNutrition}
-          cancel={hideDeleteNutritionForm}
-          fetchNutritionSections={fetchNutritionSections}
-          setError={setError}
-        />
+//         <DeleteNutritionForm
+//           visible={deletingNutrition}
+//           cancel={hideDeleteNutritionForm}
+//           fetchNutritionSections={fetchNutritionSections}
+//           setError={setError}
+//         />
   
-        {error && <ErrorMessage message={error} /> }
+//         {error && <ErrorMessage message={error} /> }
 
   
-        {nutritions.map((nutrition) => <Nutrition key={nutrition.name} nutrition={nutrition} />)}
+//         {nutritions.map((nutrition) => <Nutrition key={nutrition.name} nutrition={nutrition} />)}
 
         
-      </div>
-    );
+//       </div>
+//     );
   
-  }
+//   }
   
-  export default Nutrition;
+export default Nutrition;
