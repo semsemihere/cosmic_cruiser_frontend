@@ -35,7 +35,7 @@ function AddCategoryForm({
   if (!visible) return null;
 
   return (
-    <form>
+    <form onSubmit={addCategory}>
       <div class="column">
         <label htmlFor='name'>
           Name
@@ -90,16 +90,16 @@ function DeleteCategoryForm({
   if (!visible) return null;
 
   return (
-    <form>
+    <form onSubmit={deleteCategory}>
       <div class="column">
-      <label htmlFor='categoryID'>
-        Category ID
-      </label>
-      
-      <input required type="text" id="categoryID" value={categoryID} onChange={changeID} />
+        <label htmlFor='categoryID'>
+          Category ID
+        </label>
+        
+        <input required type="text" id="categoryID" value={categoryID} onChange={changeID} />
 
-      <button type="button" onClick={cancel}>Cancel</button>
-      <button type="submit" onClick={deleteCategory}>Delete Category</button>
+        <button type="button" onClick={cancel}>Cancel</button>
+        <button type="submit" onClick={deleteCategory}>Delete Category</button>
       </div>
     </form>
   );
@@ -178,9 +178,17 @@ function Categories() {
         // .catch(() => { setError("Something went wrong"); });
   };
 
-  const showAddCategoryForm = () => { setAddingCategory(true); };
+  const showAddCategoryForm = () => {
+    setAddingCategory(true);
+    setDeletingCategory(false);
+  };
+
+  const showDeleteCategoryForm = () => {
+    setDeletingCategory(true);
+    setAddingCategory(false);
+  };
+
   const hideAddCategoryForm = () => { setAddingCategory(false); };
-  const showDeleteCategoryForm = () => { setDeletingCategory(true); };
   const hideDeleteCategoryForm = () => { setDeletingCategory(false); };
 
   useEffect(fetchCategories,[]);
@@ -193,13 +201,8 @@ function Categories() {
           Categories
         </h1>
 
-        <button type='button' onClick={showAddCategoryForm}>
-          Add Category
-        </button>
-        
-        <button type='button' onClick={showDeleteCategoryForm}>
-          Delete Category
-        </button>
+        <button type='button' onClick={showAddCategoryForm}>Add Category</button>
+        <button type='button' onClick={showDeleteCategoryForm}>Delete Category</button>
 
       </header>
 

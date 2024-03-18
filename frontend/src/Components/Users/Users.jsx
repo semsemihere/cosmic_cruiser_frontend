@@ -227,9 +227,16 @@ function Users() {
         .catch(() => setError('There was a problem getting the list of users'));
   };
 
-  const showAddUserForm = () => { setAddingUser(true); };
+  const showAddUserForm = () => {
+    setAddingUser(true);
+    setLoginUser(false);
+  };
+  const showLoginUserForm = () => {
+    setLoginUser(true);
+    setAddingUser(false);
+  }
+
   const hideAddUserForm = () => { setAddingUser(false); };
-  const showLoginUserForm = () => { setLoginUser(true); }
   const hideLoginUserForm = () => { setLoginUser(false); }
 
   useEffect(fetchUsers,[]);
