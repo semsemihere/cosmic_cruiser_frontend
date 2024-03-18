@@ -11,6 +11,10 @@ import Navbar from './Components/Navbar';
 import Categories from './Components/Categories';
 import Users from './Components/Users';
 import Home from './Components/Home';
+import Nutrition from './Components/Nutrition';
+import EMS from './Components/EMS';
+import Finances from './Components/Finances';
+
 
 function App() {
   return (
@@ -20,6 +24,9 @@ function App() {
         <Route path="categories" element={<Categories />} />
         <Route path="users" element={<Users />} />
         <Route path="home" element={<Home />} />
+        <Route path="categories/nutrition" element={<Users />} />
+        <Route path="categories/emergency_medical_services" element={<Users />} />
+        <Route path="categories/finances" element={<Users />} />
       </Routes>
     </BrowserRouter>
   );

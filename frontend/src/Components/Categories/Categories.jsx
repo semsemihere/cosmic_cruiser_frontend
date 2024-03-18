@@ -123,6 +123,7 @@ ErrorMessage.propTypes = {
   message: propTypes.string.isRequired,
 };
 
+
 function Category ({ category }) {
   const { name, categoryID, numSections} = category;
   
