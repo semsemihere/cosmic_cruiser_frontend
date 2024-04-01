@@ -1,16 +1,112 @@
+// import React, { useEffect, useState } from 'react';
+// import propTypes from 'prop-types'
+// import axios from 'axios';
+// import { Link } from 'react-router-dom';
+
+// import { BACKEND_URL } from '../../constants';
+
+// const NUTRITION_ENDPOINT = `${BACKEND_URL}/categories/nutrition`;
+// const DELETE_NUTRITION_ENDPOINT = `${BACKEND_URL}/categories/nutrition/delete`;
+
+
+// function Nutrition() {
+//   return <div>Loading...</div>;
+// }
+  
+// export default Nutrition;
+
+
 import React, { useEffect, useState } from 'react';
-import propTypes from 'prop-types'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 import { BACKEND_URL } from '../../constants';
 
 const NUTRITION_ENDPOINT = `${BACKEND_URL}/categories/nutrition`;
-const DELETE_NUTRITION_ENDPOINT = `${BACKEND_URL}/categories/nutrition/delete`;
 
+function AddNutritionSectionForm({ setError, fetchNutritionSections }) {
+  const [name, setName] = useState('')
+  const [sectionID, setSectionID] = useState(0);
+
+  const changeName = (event) => { setName(event.target.value); };
+  const changeNumber = (event) => { setSectionID(event.target.value); };
+
+  const addNutritionSection = (event) => {
+    event.preventDefault();
+    axios.post(NUTRITION_ENDPOINT, { name: name, sectionID: sectionID })
+    .then(fetchNutritionSections)  // if successful
+    .catch(() => { setError('There was a problem adding a nutrition section!'); });
+  };
+
+
+  return (
+    <form>
+
+      <label htmlFor='name'>
+        Name
+      </label>
+      <input required type="text" id="name" value={name} onChange={changeName}>
+      </input>
+
+      <label htmlFor='number'>
+        Section ID
+      </label>
+      <input required type="number" id="number" value={sectionID} onChange={changeNumber}>
+      </input>
+
+      {/* <button type="button" onClick={cancel}>Cancel</button> */}
+      <button type="submit" onClick={addNutritionSection}>Add Nutrition Section</button>
+    </form>
+  );
+
+}
 
 function Nutrition() {
-  return <div>Loading...</div>;
+  const [error, setError] = useState("");
+  const[nutrition, setNutritionSections] = useState([]);
+
+  const fetchNutritionSections = () => {
+    axios.get(NUTRITION_ENDPOINT)
+        // successfully connected
+        .then((response) => {
+          const nutritionObject = response.data.Data;
+          const keys = Object.keys(nutritionObject);
+          const nutritionArray = keys.map((key) => nutritionObject[key]);
+          setNutritionSections(nutritionArray);
+        })
+        // failed connection
+        .catch(() => { setError("Something went wrong"); });
+  };
+
+  useEffect(
+    fetchNutritionSections,
+    [],
+  );
+
+  return (
+    <div className="wrapper">
+      <h1>
+        All Nutrition Sections
+      </h1>
+      {error && (
+        <div className="error-message">
+          {error}
+        </div>
+      )}
+
+      <AddNutritionSectionForm setError={setError} />
+
+      {nutrition.map((nutrition) => (
+        <div className="nutrition-container">
+          <h2>{nutrition.name}</h2>
+          <p>Section ID: {nutrition.sectionID} </p>
+        </div>
+      ))
+
+      }
+      
+    </div>
+  )
+
 }
-  
+
 export default Nutrition;
