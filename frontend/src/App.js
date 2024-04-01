@@ -26,7 +26,7 @@ function App() {
         <Route path="home" element={<Home />} />
         <Route path="categories/nutrition" element={<Nutrition />} />
         <Route path="categories/emergency_medical_services" element={<Users />} />
-        <Route path="categories/finances" element={<Users />} />
+        <Route path="categories/finances" element={<Finances />} />
       </Routes>
     </BrowserRouter>
   );
