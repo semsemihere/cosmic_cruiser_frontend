@@ -18,6 +18,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import { BACKEND_URL } from '../../constants';
 
@@ -33,8 +34,12 @@ function AddNutritionSectionForm({ setError, fetchNutritionSections }) {
   const addNutritionSection = (event) => {
     event.preventDefault();
     axios.post(NUTRITION_ENDPOINT, { name: name, sectionID: sectionID })
-    .then(fetchNutritionSections)  // if successful
-    .catch(() => { setError('There was a problem adding a nutrition section!'); });
+    
+    .then(() => {  // if successful
+      setError('');
+      fetchNutritionSections();
+    })
+    .catch((error) => { setError(error.response.data.message); });
   };
 
 
@@ -68,13 +73,17 @@ function Nutrition() {
     axios.get(NUTRITION_ENDPOINT)
         // successfully connected
         .then((response) => {
-          const nutritionObject = response.data.Data;
-          const keys = Object.keys(nutritionObject);
-          const nutritionArray = keys.map((key) => nutritionObject[key]);
-          setNutritionSections(nutritionArray);
+          if (response && response.data && response.data.Data) {
+            const nutritionObject = response.data.Data;
+            const keys = Object.keys(nutritionObject);
+            const nutritionArray = keys.map((key) => nutritionObject[key]);
+            setNutritionSections(nutritionArray);
+          } else {
+            setError("No data received.");
+          }
         })
         // failed connection
-        .catch(() => { setError("Something went wrong"); });
+        .catch((error) => { setError(error.message); });
   };
 
   useEffect(
@@ -97,7 +106,9 @@ function Nutrition() {
 
       {nutrition.map((nutrition) => (
         <div className="nutrition-container">
-          <h2>{nutrition.name}</h2>
+          <Link to={`/nutrition/${nutrition.sectionID}`}>
+            <h2>{nutrition.name}</h2>
+          </Link>
           <p>Section ID: {nutrition.sectionID} </p>
         </div>
       ))
