@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import { BACKEND_URL } from '../../constants';
 
@@ -80,7 +81,9 @@ function Finances() {
 
       {finances.map((finances) => (
         <div className="finances-container">
-          <h2>{finances.name}</h2>
+          <Link to={`/finances/${finances.sectionID}`}>
+            <h2>{finances.name}</h2>
+          </Link>
           <p>Section ID: {finances.sectionID} </p>
         </div>
       ))
