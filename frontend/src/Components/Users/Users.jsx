@@ -97,8 +97,6 @@ function AddUserForm({
 
         <button type="button" onClick={cancel}>Cancel</button>
         <button type="submit" onClick={addUser}>Sign Up</button>
-
-        
       </div>
     </form>
   );
@@ -153,7 +151,7 @@ User.propTypes = {
 function usersObjectToArray({ Data }) {
   const keys = Object.keys(Data);
   const users = keys.map((key) => Data[key]);
-  console.log("USERS: ", users)
+  // console.log("USERS: ", users)
   return users;
 }
 
