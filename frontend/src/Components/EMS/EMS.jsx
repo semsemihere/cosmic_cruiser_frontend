@@ -79,8 +79,8 @@ function EMS() {
 
       {ems.map((ems) => (
         <div className="ems-container">
-          <h2>{ems.name}</h2>
-          <p>Section ID: {ems.sectionID} </p>
+          <h2>hi{ems.emsName}</h2>
+          <p>Section ID: {ems.emsID} </p>
         </div>
       ))
 
