@@ -10,6 +10,7 @@ import './App.css';
 import Navbar from './Components/Navbar';
 import Categories from './Components/Categories';
 import Users from './Components/Users';
+import Login from './Components/Login';
 import Home from './Components/Home';
 import Nutrition from './Components/Nutrition';
 import EMS from './Components/EMS';
@@ -21,9 +22,11 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
+        <Route path="" element={<Home />} />
+        <Route path="home" element={<Home />} />
         <Route path="categories" element={<Categories />} />
         <Route path="users" element={<Users />} />
-        <Route path="home" element={<Home />} />
+        <Route path="login" element={<Login />} />
         <Route path="categories/nutrition" element={<Nutrition />} />
         <Route path="categories/emergency_medical_services" element={<EMS />} />
         <Route path="categories/finances" element={<Finances />} />

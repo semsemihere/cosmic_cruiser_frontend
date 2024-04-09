@@ -1,31 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
 // import AddCategoryForm from '../Categories/Categories'
 
-import { BACKEND_URL } from '../../constants';
+// import { BACKEND_URL } from '../../constants';
 
-const HOME_ENDPOINT = `${BACKEND_URL}/home`;
+// const HOME_ENDPOINT = `${BACKEND_URL}`;
 
 function Home() {
-  const [error, setError] = useState("");
-  const[users, setUsers] = useState([]);
+  // const [error, setError] = useState("");
+  
+  // const[users, setUsers] = useState([]);
 
-  useEffect(
-    () => {
-      axios.get(HOME_ENDPOINT)
-        // successfully connected
-        .then((response) => {
-          const homeObject = response.data.Data;
-          const keys = Object.keys(homeObject);
-          const homeArray = keys.map((key) => homeObject[key]);
-          setUsers(homeArray);
-        }
-        )
-        // failed connection
-        .catch(() => { setError("Something went wrong"); });
-    },
-    [],
-  );
+  // useEffect(
+  //   () => {
+  //     axios.get(HOME_ENDPOINT)
+  //       // successfully connected
+  //       .then((response) => {
+  //         const homeObject = response.data.Data;
+  //         const keys = Object.keys(homeObject);
+  //         const homeArray = keys.map((key) => homeObject[key]);
+  //         setUsers(homeArray);
+  //       }
+  //       )
+  //       // failed connection
+  //       .catch(() => { setError("Something went wrong"); });
+  //   },
+  //   [],
+  // );
 
   return (
     <div className="wrapper">
@@ -37,11 +38,7 @@ function Home() {
         Our categories range from everything from medical advice to finance tips.<br></br>
         Our goal is to have you the user help us create a community of learning and help broaden our service to topics that you love!
       </p>
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}      
+        
     </div>
   )
 
