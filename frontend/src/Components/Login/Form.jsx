@@ -37,6 +37,8 @@ function fieldsToAnswers(fields) {
   return answers;
 }
 
+
+// function Form({ fields }) {
 function Form({ fields, handleSubmit }) {
   /* This line creates two things: an object (answers) which stores the user's input
    * and a function (setAnswers) which can update that object. If you simply had the
@@ -88,7 +90,10 @@ function Form({ fields, handleSubmit }) {
         * of "submit", they'd have to manually click the button - enter wouldn't
         * word. Not the end of the world, but a little more annoying.
         */}
+        
       <button className="form_button" type="submit" onClick={() => { handleSubmit(answers); }}>Log in</button>
+
+      {/* <button className="form_button" type="submit" onClick={() => {}}>Log in</button>  */}
     </form>
   );
 }

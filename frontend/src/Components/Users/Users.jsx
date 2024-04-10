@@ -144,7 +144,7 @@ User.propTypes = {
     password: propTypes.string.isRequired,
     firstname: propTypes.string.isRequired,
     lastname: propTypes.string.isRequired,
-    phonenumber: propTypes.number.isRequired,
+    phonenumber: propTypes.string.isRequired,
   }).isRequired,
 };
 
