@@ -110,6 +110,7 @@ function Nutrition() {
             <h2>{nutrition.sectionName}</h2>
           </Link>
           <p>Section ID: {nutrition.sectionID} </p>
+          <p>Article IDs: {nutrition.arrayOfArticleIDs} </p>
         </div>
       ))
 
