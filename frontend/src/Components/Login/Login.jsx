@@ -4,7 +4,8 @@ import FormWrapper from './Form';
 function Login() {
   // Define a function to handle form submission
   const handleLogin = (formData) => {
-    // You can handle form submission here, for example, sending the form data to the backend for authentication
+    // You can handle form submission
+    // sending the form data to the backend for authentication
     console.log('Form submitted with data:', formData);
   };
 
