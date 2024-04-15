@@ -6,7 +6,11 @@ import { BACKEND_URL } from '../../constants';
 
 const LOGIN_ENDPOINT = `${BACKEND_URL}/login`;
 
-const FORM = []
+const FORM = [
+  { fieldName: 'role', question: 'Role', param_type: 'text', placeholder: 'Role'},
+  { fieldName: 'username', question: 'Username', param_type: 'text', placeholder: 'Username'},
+  { fieldName: 'password', question: 'Password', param_type: 'password', placeholder: 'Password'}
+]
 
 function fieldsToAnswers(fields) {
   const answers = {};
@@ -48,51 +52,56 @@ const Form =({ fields }) => {
     console.log(answers);
     try {
       await axios.post(LOGIN_ENDPOINT, {
+        role: answers['role'],
         username: answers['username'],
         password: answers['password']
       });
-      alert('Registered successfully!');
+      // alert('Login successful!');
+      window.location.href = `http://localhost:3000/`
     } catch (error) {
-      alert('An error occurred while registering.');
+      alert('Invalid username or password.');
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      {formFields.map((field) => (
+      {fields.map((field) => (
         <div key={field.fld_nm}>
           {field.instructions ? (
             <p>{field.question}</p>
           ) : (
             <>
-              <label htmlFor={field.fld_nm}>{field.question}</label>
+              <label htmlFor={field.fieldName}>{field.question}</label>
               {field.param_type === 'date' ? (
                 <input
                   id={field.fld_nm}
-                  type="date"
-                  value={answers[field.fld_nm]}
-                  onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
+                  type="date"fieldName
+                  value={answers[field.fieldName]}
+                  onChange={(e) => { answerQuestion(field.fieldName, e.target.value); }}
+                  placeholder={field.placeholder}
                 />
               ) : field.param_type === 'password' ? (
                 <input
-                  id={field.fld_nm}
+                  id={field.fieldName}
                   type="password"
-                  value={answers[field.fld_nm]}
-                  onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
+                  value={answers[field.fieldName]}
+                  onChange={(e) => { answerQuestion(field.fieldName, e.target.value); }}
+                  placeholder={field.placeholder}
                 />
               ) : (
                 <input
-                  id={field.fld_nm}
+                  id={field.fieldName}
                   type="text"
-                  value={answers[field.fld_nm]}
-                  onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
+                  value={answers[field.fieldName]}
+                  onChange={(e) => { answerQuestion(field.fieldName, e.target.value); }}
+                  placeholder={field.placeholder}
                 />
               )}
             </>
           )}
         </div>
       ))}
-      <button type="submit">Sign Up</button>
+      <button type="submit">Log In</button>
     </form>
   );
 }
