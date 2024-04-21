@@ -6,11 +6,13 @@ import { BACKEND_URL } from '../../constants';
 
 const LOGIN_ENDPOINT = `${BACKEND_URL}/login`;
 
-const FORM = [
-  { fieldName: 'role', question: 'Role', param_type: 'text', placeholder: 'Role'},
-  { fieldName: 'username', question: 'Username', param_type: 'text', placeholder: 'Username'},
-  { fieldName: 'password', question: 'Password', param_type: 'password', placeholder: 'Password'}
-]
+// const FORM = [
+//   { fieldName: 'role', question: 'Role', param_type: 'text', placeholder: 'Role'},
+//   { fieldName: 'username', question: 'Username', param_type: 'text', placeholder: 'Username'},
+//   { fieldName: 'password', question: 'Password', param_type: 'password', placeholder: 'Password'}
+// ]
+
+const FORM = []
 
 function fieldsToAnswers(fields) {
   const answers = {};
@@ -65,35 +67,35 @@ const Form =({ fields }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {fields.map((field) => (
+      {formFields.map((field) => (
         <div key={field.fld_nm}>
           {field.instructions ? (
             <p>{field.question}</p>
           ) : (
             <>
-              <label htmlFor={field.fieldName}>{field.question}</label>
+              <label htmlFor={field.fld_nm}>{field.question}</label>
               {field.param_type === 'date' ? (
                 <input
                   id={field.fld_nm}
-                  type="date"fieldName
-                  value={answers[field.fieldName]}
-                  onChange={(e) => { answerQuestion(field.fieldName, e.target.value); }}
+                  type="date"
+                  value={answers[field.fld_nm]}
+                  onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
                   placeholder={field.placeholder}
                 />
               ) : field.param_type === 'password' ? (
                 <input
-                  id={field.fieldName}
+                  id={field.fld_nm}
                   type="password"
-                  value={answers[field.fieldName]}
-                  onChange={(e) => { answerQuestion(field.fieldName, e.target.value); }}
+                  value={answers[field.fld_nm]}
+                  onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
                   placeholder={field.placeholder}
                 />
               ) : (
                 <input
-                  id={field.fieldName}
+                  id={field.fld_nm}
                   type="text"
-                  value={answers[field.fieldName]}
-                  onChange={(e) => { answerQuestion(field.fieldName, e.target.value); }}
+                  value={answers[field.fld_nm]}
+                  onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
                   placeholder={field.placeholder}
                 />
               )}
