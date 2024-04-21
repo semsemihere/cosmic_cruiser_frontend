@@ -66,22 +66,24 @@ const Form =({ fields }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form-container">
       {formFields.map((field) => (
-        <div key={field.fld_nm}>
+        <div key={field.fld_nm} className="form-field">
           {field.instructions ? (
             <p>{field.question}</p>
           ) : (
             <>
               <label htmlFor={field.fld_nm}>{field.question}</label>
-              {field.param_type === 'date' ? (
-                <input
-                  id={field.fld_nm}
-                  type="date"
-                  value={answers[field.fld_nm]}
-                  onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
-                  placeholder={field.placeholder}
-                />
+              {field.param_type === 'dropdown' ? (
+                <select
+                id={field.fld_nm}
+                value={answers[field.fld_nm]}
+                onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
+                >
+                  {field.choices.map((option) =>(
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
               ) : field.param_type === 'password' ? (
                 <input
                   id={field.fld_nm}
