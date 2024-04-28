@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Navbar from '../Navbar';
 
 import { BACKEND_URL } from '../../constants';
 
@@ -68,6 +69,7 @@ function Finances() {
 
   return (
     <div className="wrapper">
+      <Navbar />
       <h1>
         All Finance Sections
       </h1>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import propTypes from 'prop-types'
+import Navbar from '../Navbar';
 
 import { BACKEND_URL } from '../../constants';
 
@@ -241,6 +242,7 @@ function Users() {
 
   return (
     <div className="wrapper">
+      <Navbar />
       <header>
         <h1>
           Users

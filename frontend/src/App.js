@@ -3,6 +3,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  useLocation
 } from 'react-router-dom';
 
 import './App.css';
@@ -20,16 +21,16 @@ import Finances from './Components/Finances';
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route path="" element={<Login />} />
         <Route path="home" element={<Home />} />
         <Route path="categories" element={<Categories />} />
         <Route path="users" element={<Users />} />
-        <Route path="login" element={<Login />} />
         <Route path="categories/nutrition" element={<Nutrition />} />
         <Route path="categories/emergency_medical_services" element={<EMS />} />
         <Route path="categories/finances" element={<Finances />} />
+        <Route path="login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
