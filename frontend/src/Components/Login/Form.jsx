@@ -59,7 +59,7 @@ const Form =({ fields }) => {
         password: answers['password']
       });
       // alert('Login successful!');
-      window.location.href = `http://localhost:3000/`
+      window.location.href = `http://localhost:3000/home`
     } catch (error) {
       alert('Invalid username or password.');
     }

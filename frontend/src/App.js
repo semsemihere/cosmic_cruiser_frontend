@@ -22,7 +22,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="" element={<Home />} />
+        <Route path="" element={<Login />} />
         <Route path="home" element={<Home />} />
         <Route path="categories" element={<Categories />} />
         <Route path="users" element={<Users />} />
