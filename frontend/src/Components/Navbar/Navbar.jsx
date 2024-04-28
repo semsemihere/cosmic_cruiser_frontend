@@ -6,7 +6,7 @@ const PAGES = [
   { label: 'Home', destination: '/home' },
   { label: 'Categories', destination: '/categories' },
   { label: 'Users', destination: '/users' },
-  { label: 'Login', destination: '/login' },
+  // { label: 'Login', destination: '/login' },
   // { label: 'Suggestions', destination: '/suggestions' },
   // { label: 'Nutrition', destination: '/categories/nutrition' },
   // { label: 'EMS', destination: '/categories/emergency_medical_services' },
