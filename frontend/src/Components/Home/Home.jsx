@@ -6,8 +6,6 @@
 
 // const HOME_ENDPOINT = `${BACKEND_URL}`;
 
-import Navbar from "../Navbar";
-
 function Home() {
   // const [error, setError] = useState("");
   
@@ -32,7 +30,6 @@ function Home() {
 
   return (
     <div className="wrapper">
-      <Navbar />
       <h1>
         Welcome to Jack of All Trades!
       </h1>

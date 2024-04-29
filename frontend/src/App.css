@@ -17,6 +17,7 @@ html {
 
 .wrapper {
   max-width: min(70%, 100% - 2rem);
+  /* width:100%; */
   margin-inline: auto;
 }
 
@@ -25,6 +26,7 @@ html {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  max-width: 100%;
 }
 
 button {
@@ -109,25 +111,6 @@ form button[type=button] {
 form button[type=button]:focus,
 form button[type=button]:hover {
   border-color: var(--main-color);
-}
-
-
-.form_input{
-  display: table;
-  width: 40%;
-  margin: .5rem;
-  padding: 1rem 0.5rem 0.5rem 0.5rem;
-  border-radius: 5px;
-  border: none;
-  color: var(--dark-color);
-  font-size: 1.5rem;  
-}
-
-.form_button{
-  width: 10%;
-  margin: .5rem; 
-  color: var(--dark-color);
-  font-size: 1.5rem;  
 }
 
 nav {
@@ -220,26 +203,69 @@ nav a:focus {
   font-size: 1.5rem;
 }
 
+input, select {
+  width: 200px;
+  font-size: inherit;
+}
 
-
+/* LOGIN PAGE */
 .form-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 1rem;
 }
 
 .form-field {
-  margin-bottom: 10px;
   display: flex;
-  /* align-items: center; */
+  margin: 0;
+  padding: 0; 
+  align-items: center;
+  font-size: 1.2rem;
+
+  font-weight: 500; 
+  width: 50%;
+
 }
 
-/* label {
-  background-color: yellow;
-} */
- 
+.form-instruction{
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0; 
+  margin: 1rem 0 2rem 0  ;
+}
 
-input, select {
-  width: 200px;
-  font-size: inherit;
+.form_label::before, 
+.form_label::after{
+  display: table;
+  width: flex;
+  
+  margin: .5rem;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+
+  font-size: 1.5rem;  
+  background:none;
+  border: none;
+
+  font-weight: 500;
+}
+
+
+.form_input{
+  display: table;
+  width: flex;
+
+  margin: .5rem;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+  border-radius: 5px;
+  border: none;
+  color: var(--dark-color);
+
+}
+
+.form_button{
+  width: 10%;
+  margin: .5rem; 
+  color: var(--dark-color);
+  font-size: 1.5rem;  
 }

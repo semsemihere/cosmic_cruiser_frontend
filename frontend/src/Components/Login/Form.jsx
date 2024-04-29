@@ -70,12 +70,12 @@ const Form =({ fields }) => {
       {formFields.map((field) => (
         <div key={field.fld_nm} className="form-field">
           {field.instructions ? (
-            <p>{field.question}</p>
+            <p className='form-instruction'>{field.question}</p>
           ) : (
             <>
-              <label htmlFor={field.fld_nm}>{field.question}</label>
+              <label className='form_label' htmlFor={field.fld_nm}>{field.question}</label>
               {field.param_type === 'dropdown' ? (
-                <select
+                <select className='form_input'
                 id={field.fld_nm}
                 value={answers[field.fld_nm]}
                 onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
@@ -85,7 +85,7 @@ const Form =({ fields }) => {
                   ))}
                 </select>
               ) : field.param_type === 'password' ? (
-                <input
+                <input className='form_input'
                   id={field.fld_nm}
                   type="password"
                   value={answers[field.fld_nm]}
@@ -93,7 +93,7 @@ const Form =({ fields }) => {
                   placeholder={field.placeholder}
                 />
               ) : (
-                <input
+                <input className='form_input'
                   id={field.fld_nm}
                   type="text"
                   value={answers[field.fld_nm]}

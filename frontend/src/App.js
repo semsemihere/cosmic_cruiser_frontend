@@ -21,7 +21,7 @@ import Finances from './Components/Finances';
 function App() {
   return (
     <BrowserRouter>
-      {/* <Navbar /> */}
+      <Navbar />
       <Routes>
         <Route path="" element={<Login />} />
         <Route path="home" element={<Home />} />

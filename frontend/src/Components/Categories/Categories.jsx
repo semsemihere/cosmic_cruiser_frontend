@@ -197,7 +197,6 @@ function Categories() {
 
   return (
     <div className="wrapper">
-      <Navbar />
       <header>
 
         <h1>
