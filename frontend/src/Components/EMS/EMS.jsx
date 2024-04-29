@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
 
 import { BACKEND_URL } from '../../constants';
@@ -81,7 +82,9 @@ function EMS() {
 
       {ems.map((ems) => (
         <div className="ems-container">
-          <h2>hi{ems.emsName}</h2>
+          <Link to={`/categories/emergency_medical_services/${ems.sectionID}`}>
+            <h2>{ems.emsName}</h2>
+          </Link>
           <p>Section ID: {ems.emsID} </p>
         </div>
       ))
