@@ -247,12 +247,12 @@ function Users() {
         <h1>
           Users
         </h1>
-        <button type='button' onClick={showAddUserForm}>
+        {/* <button type='button' onClick={showAddUserForm}>
             Sign Up
         </button>
         <button type='button' onClick={showLoginUserForm}>
             Sign In
-        </button>
+        </button> */}
       </header>
 
       <AddUserForm
