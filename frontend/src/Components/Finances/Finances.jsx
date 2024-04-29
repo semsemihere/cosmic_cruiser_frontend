@@ -83,7 +83,7 @@ function Finances() {
 
       {finances.map((finances) => (
         <div className="finances-container">
-          <Link to={`/finances/${finances.sectionID}`}>
+          <Link to={`/categories/finances/${finances.sectionID}`}>
             <h2>{finances.name}</h2>
           </Link>
           <p>Section ID: {finances.sectionID} </p>
