@@ -50,11 +50,11 @@ function AddCategoryForm({
         
         <input required type="text" id="categoryID" value={categoryID} onChange={changeID} />
 
-        <label htmlFor='numSections'>
+        {/* <label htmlFor='numSections'>
           Number of Sections
         </label>
 
-        <input required type="number" id="numSections" value={numSections} onChange={changeNumberOfSections} />
+        <input required type="number" id="numSections" value={numSections} onChange={changeNumberOfSections} /> */}
 
         <button type="button" onClick={cancel}>Cancel</button>
         <button type="submit" onClick={addCategory}>Add Category</button>
