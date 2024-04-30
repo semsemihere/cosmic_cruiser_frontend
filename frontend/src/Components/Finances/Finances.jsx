@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import propTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Navbar from '../Navbar';
+// import Navbar from '../Navbar';
 
 import { BACKEND_URL } from '../../constants';
 
-// const FINANCES_ENDPOINT = `${BACKEND_URL}/categories`;
 const FINANCES_ENDPOINT = `${BACKEND_URL}/categories/finances`;
+const DELETE_FINANCES_ENDPOINT = `${FINANCES_ENDPOINT}/delete`;
 
-function AddFinanceSectionForm({ setError, fetchFinanceSections }) {
+function AddSectionForm({
+  visible, 
+  cancel, 
+  fetchFinanceSections,
+  setError
+}){
   const [name, setName] = useState('')
   const [sectionID, setSectionID] = useState(0);
 
@@ -22,66 +28,179 @@ function AddFinanceSectionForm({ setError, fetchFinanceSections }) {
     .catch(() => { setError('There was a problem adding a finance section!'); });
   };
 
+  if (!visible) return null;
 
-  return (
-    <form>
+  return(
+    <form onSubmit={addFinanceSection}>
+      <div className='column'>
+        <label htmlFor='name'>
+          Title
+        </label>
+        <input required type="text" id="name" value={name} onChange={changeName} />
 
-      <label htmlFor='name'>
-        Name
-      </label>
-      <input required type="text" id="name" value={name} onChange={changeName}>
-      </input>
+        <label htmlFor='categoryID'>
+          Category ID
+        </label>
+        
+        <input required type="text" id="number" value={sectionID} onChange={changeNumber} />
 
-      <label htmlFor='number'>
-        Section ID
-      </label>
-      <input required type="number" id="number" value={sectionID} onChange={changeNumber}>
-      </input>
-
-      {/* <button type="button" onClick={cancel}>Cancel</button> */}
-      <button type="submit" onClick={addFinanceSection}>Add Finance Section</button>
+        <button type="button" onClick={cancel}>Cancel</button>
+        <button type="submit" onClick={addFinanceSection}>Add Category</button>
+      </div>
     </form>
-  );
+  )
 
 }
 
-function Finances() {
+function DeleteSectionForm({
+  visible,
+  cancel,
+  fetchFinanceSections,
+  setError,
+}){
+  const [sectionID, setID] = useState('');
+  const changeID = (event) => { setID(event.target.value);};
+
+  const deleteSection = () => {
+    if(!sectionID){
+      setError('Section ID is required!');
+      return;
+    }
+
+    axios.delete(`${DELETE_FINANCES_ENDPOINT}/${sectionID}`)
+    .then(() => {
+      setError('');
+      fetchFinanceSections();
+    })
+    .catch((error) => { setError(error.response.data.message);});
+  }
+
+  if(!visible) return null;
+
+  return(
+    <form onSubmit={deleteSection}>
+      <div class='column'>
+        <label htmlFor='sectionID'>
+          Section ID
+        </label>
+
+        <input required type="text" id="number" value={sectionID} onChange={changeID} />
+
+        <button type="button" onClick={cancel}>Cancel</button>
+        <button type="submit" onClick={deleteSection}>Delete</button>
+
+      </div>
+    </form>
+  );
+}
+
+AddSectionForm.propTypes = {
+  visible: propTypes.bool.isRequired,
+  cancel: propTypes.func.isRequired,
+  fetchFinanceSections: propTypes.func.isRequired,
+  setError: propTypes.func.isRequired,
+}
+
+function ErrorMessage({ message }) {
+  return (
+    <div className='error-message'>
+      {message}
+    </div>
+  );
+}
+ErrorMessage.propTypes = {
+  message: propTypes.string.isRequired,
+};
+
+
+function Finance ({ section }){
+  const { sections, sectionID, articles} = section;
+
+  return (
+    <div className='categories-container'>
+
+      <Link to={`/categories/${sectionID}`}>
+        <h2>{sections}</h2>
+      </Link>
+            
+      {/* <p>
+        ID: {sectionID}
+      </p> */}
+
+    </div>
+  );
+}
+
+Finance.propTypes = {
+  finance: propTypes.shape({
+    sections: propTypes.string.isRequired,
+    sectionID: propTypes.string.isRequired
+  }).isRequired,
+};
+
+function sectionObjectToArray({ Data }) {
+  const keys = Object.keys(Data);
+  const finances = keys.map((key) => Data[key]);
+  return finances;
+}
+
+function Finances(){
   const [error, setError] = useState("");
-  const[finances, setFinanceSections] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [addSections, setAddingSections] = useState(false);
+  const [deleteSections, setDeletingSections] = useState(false);
 
   const fetchFinanceSections = () => {
     axios.get(FINANCES_ENDPOINT)
-        // successfully connected
-        .then((response) => {
-          const financesObject = response.data.Data;
-          const keys = Object.keys(financesObject);
-          const financesArray = keys.map((key) => financesObject[key]);
-          setFinanceSections(financesArray);
-        })
-        // failed connection
-        .catch(() => { setError("Something went wrong"); });
+    .then(({ data }) => setSections(sectionObjectToArray(data)))
+    .catch(() => setError('There was a problem gettign the list of sections'));
   };
 
-  useEffect(
-    fetchFinanceSections,
-    [],
-  );
+
+  const showAddSectionForm = () => {
+    setAddingSections(true);
+    setDeletingSections(false);
+  };
+
+  const showDeleteSectionForm = () => {
+    setAddingSections(false);
+    setDeletingSections(true);
+  };
+
+  const hideAddSectionForm = () => { setAddingSections(false); };
+  const hideDeleteSectionForm = () => { setDeletingSections(false); }
+
+  useEffect(fetchFinanceSections, []);
 
   return (
-    <div className="wrapper">
-      <Navbar />
-      <h1>
-        All Finance Sections
-      </h1>
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
+    <div className='wrapper'>
+      <header>
+        <h1>
+          Finance Sections
+        </h1>
 
-      <AddFinanceSectionForm setError={setError} />
+        <button type='button' onClick={showAddSectionForm}>Add Section</button>
+        <button type='button' onClick={showDeleteSectionForm}>Delete Section</button>
 
-      {finances.map((finances) => (
+      </header>
+
+      <AddSectionForm
+        visible={addSections}
+        cancel={hideAddSectionForm}
+        fetchFinanceSections={fetchFinanceSections}
+        setError={setError}
+      />
+
+      <DeleteSectionForm
+        visible={deleteSections}
+        cancel={hideDeleteSectionForm}
+        fetchFinanceSections={fetchFinanceSections}
+        setError={setError}
+      />
+
+      {error && <ErrorMessage message={error} /> }
+
+      {sections.map((finances) => (
         <div className="finances-container">
           <Link to={`/categories/finances/${finances.sectionID}`}>
             <h2>{finances.name}</h2>
@@ -89,12 +208,101 @@ function Finances() {
           <p>Section ID: {finances.sectionID} </p>
         </div>
       ))
-
       }
-      
+
     </div>
-  )
+  );
+
 
 }
 
 export default Finances;
+
+////////////////////////////////////////////////
+// function AddFinanceSectionForm({ setError, fetchFinanceSections }) {
+//   const [name, setName] = useState('')
+//   const [sectionID, setSectionID] = useState(0);
+
+//   const changeName = (event) => { setName(event.target.value); };
+//   const changeNumber = (event) => { setSectionID(event.target.value); };
+
+//   const addFinanceSection = (event) => {
+//     event.preventDefault();
+//     axios.post(FINANCES_ENDPOINT, { name: name, sectionID: sectionID })
+//     .then(fetchFinanceSections)  // if successful
+//     .catch(() => { setError('There was a problem adding a finance section!'); });
+//   };
+
+
+//   return (
+//     <form>
+
+//       <label htmlFor='name'>
+//         Name
+//       </label>
+//       <input required type="text" id="name" value={name} onChange={changeName}>
+//       </input>
+
+//       <label htmlFor='number'>
+//         Section ID
+//       </label>
+//       <input required type="number" id="number" value={sectionID} onChange={changeNumber}>
+//       </input>
+
+//       {/* <button type="button" onClick={cancel}>Cancel</button> */}
+//       <button type="submit" onClick={addFinanceSection}>Add Finance Section</button>
+//     </form>
+//   );
+
+// }
+
+// function Finances() {
+//   const [error, setError] = useState("");
+//   const[finances, setFinanceSections] = useState([]);
+
+//   const fetchFinanceSections = () => {
+//     axios.get(FINANCES_ENDPOINT)
+//         // successfully connected
+//         .then((response) => {
+//           const financesObject = response.data.Data;
+//           const keys = Object.keys(financesObject);
+//           const financesArray = keys.map((key) => financesObject[key]);
+//           setFinanceSections(financesArray);
+//         })
+//         // failed connection
+//         .catch(() => { setError("Something went wrong"); });
+//   };
+
+//   useEffect(
+//     fetchFinanceSections,
+//     [],
+//   );
+
+//   return (
+//     <div className="wrapper">
+//       {/* <Navbar /> */}
+//       <h1>
+//         All Finance Sections
+//       </h1>
+//       {error && (
+//         <div className="error-message">
+//           {error}
+//         </div>
+//       )}
+
+//       <AddFinanceSectionForm setError={setError} />
+
+//       {finances.map((finances) => (
+//         <div className="finances-container">
+//           <Link to={`/categories/finances/${finances.sectionID}`}>
+//             <h2>{finances.name}</h2>
+//           </Link>
+//           <p>Section ID: {finances.sectionID} </p>
+//         </div>
+//       ))
+//       }
+//     </div>
+//   )
+// }
+
+// export default Finances;

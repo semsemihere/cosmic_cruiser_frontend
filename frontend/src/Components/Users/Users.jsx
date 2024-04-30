@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import propTypes from 'prop-types'
-import Navbar from '../Navbar';
-
+// import Navbar from '../Navbar';
 import { BACKEND_URL } from '../../constants';
-
 // import { Link } from 'react-router-dom';
 
 
@@ -47,6 +45,7 @@ function AddUserForm({
 
 
   // INFO TO CREATE USER: email, username, password, firstname, lastname, phonenumber
+  
   return (
     <form>
       <div class="column">
@@ -226,14 +225,14 @@ function Users() {
         .catch(() => setError('There was a problem getting the list of users'));
   };
 
-  const showAddUserForm = () => {
-    setAddingUser(true);
-    setLoginUser(false);
-  };
-  const showLoginUserForm = () => {
-    setLoginUser(true);
-    setAddingUser(false);
-  }
+  // const showAddUserForm = () => {
+  //   setAddingUser(true);
+  //   setLoginUser(false);
+  // };
+  // const showLoginUserForm = () => {
+  //   setLoginUser(true);
+  //   setAddingUser(false);
+  // }
 
   const hideAddUserForm = () => { setAddingUser(false); };
   const hideLoginUserForm = () => { setLoginUser(false); }
@@ -280,5 +279,7 @@ function Users() {
   )
 
 }
+
+
 
 export default Users;
