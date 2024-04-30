@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import propTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-// import Navbar from '../Navbar';
+import Navbar from '../Navbar';
 
 import { BACKEND_URL } from '../../constants';
 
@@ -112,32 +112,6 @@ ErrorMessage.propTypes = {
   message: propTypes.string.isRequired,
 };
 
-
-function Finance ({ section }){
-  const { sections, sectionID, articles} = section;
-
-  return (
-    <div className='categories-container'>
-
-      <Link to={`/categories/${sectionID}`}>
-        <h2>{sections}</h2>
-      </Link>
-            
-      {/* <p>
-        ID: {sectionID}
-      </p> */}
-
-    </div>
-  );
-}
-
-Finance.propTypes = {
-  finance: propTypes.shape({
-    sections: propTypes.string.isRequired,
-    sectionID: propTypes.string.isRequired
-  }).isRequired,
-};
-
 function sectionObjectToArray({ Data }) {
   const keys = Object.keys(Data);
   const finances = keys.map((key) => Data[key]);
@@ -153,7 +127,7 @@ function Finances(){
   const fetchFinanceSections = () => {
     axios.get(FINANCES_ENDPOINT)
     .then(({ data }) => setSections(sectionObjectToArray(data)))
-    .catch(() => setError('There was a problem gettign the list of sections'));
+    .catch(() => setError('There was a problem getting the list of sections'));
   };
 
 
@@ -173,42 +147,49 @@ function Finances(){
   useEffect(fetchFinanceSections, []);
 
   return (
-    <div className='wrapper'>
-      <header>
-        <h1>
-          Finance Sections
-        </h1>
+    
+    <div>
+      <Navbar />
+      <div className='wrapper'>
+        <header>
+          <h1>
+            Finance Sections
+          </h1>
 
-        <button type='button' onClick={showAddSectionForm}>Add Section</button>
-        <button type='button' onClick={showDeleteSectionForm}>Delete Section</button>
+          <button type='button' onClick={showAddSectionForm}>Add Section</button>
+          <button type='button' onClick={showDeleteSectionForm}>Delete Section</button>
 
-      </header>
+        </header>
 
-      <AddSectionForm
-        visible={addSections}
-        cancel={hideAddSectionForm}
-        fetchFinanceSections={fetchFinanceSections}
-        setError={setError}
-      />
+        <AddSectionForm
+          visible={addSections}
+          cancel={hideAddSectionForm}
+          fetchFinanceSections={fetchFinanceSections}
+          setError={setError}
+        />
 
-      <DeleteSectionForm
-        visible={deleteSections}
-        cancel={hideDeleteSectionForm}
-        fetchFinanceSections={fetchFinanceSections}
-        setError={setError}
-      />
+        <DeleteSectionForm
+          visible={deleteSections}
+          cancel={hideDeleteSectionForm}
+          fetchFinanceSections={fetchFinanceSections}
+          setError={setError}
+        />
 
-      {error && <ErrorMessage message={error} /> }
+        {error && <ErrorMessage message={error} /> }
 
-      {sections.map((finances) => (
-        <div className="finances-container">
-          <Link to={`/categories/finances/${finances.sectionID}`}>
-            <h2>{finances.name}</h2>
-          </Link>
-          <p>Section ID: {finances.sectionID} </p>
-        </div>
-      ))
-      }
+        {/* console.log("Sections"+ sections); */}
+
+        {sections.map((finances) => (
+          <div className="finances-container">
+            {/* <Link to={`/categories/finances/${finances.sectionID}`}> */}
+            <Link to={`/categories/finances/${finances.name}${finances.sectionID}`}>
+              <h2>{finances.name}</h2>
+            </Link>
+            <p>Section ID: {finances.sectionID} </p>
+          </div>
+        ))
+        }
+      </div>
 
     </div>
   );
@@ -217,92 +198,3 @@ function Finances(){
 }
 
 export default Finances;
-
-////////////////////////////////////////////////
-// function AddFinanceSectionForm({ setError, fetchFinanceSections }) {
-//   const [name, setName] = useState('')
-//   const [sectionID, setSectionID] = useState(0);
-
-//   const changeName = (event) => { setName(event.target.value); };
-//   const changeNumber = (event) => { setSectionID(event.target.value); };
-
-//   const addFinanceSection = (event) => {
-//     event.preventDefault();
-//     axios.post(FINANCES_ENDPOINT, { name: name, sectionID: sectionID })
-//     .then(fetchFinanceSections)  // if successful
-//     .catch(() => { setError('There was a problem adding a finance section!'); });
-//   };
-
-
-//   return (
-//     <form>
-
-//       <label htmlFor='name'>
-//         Name
-//       </label>
-//       <input required type="text" id="name" value={name} onChange={changeName}>
-//       </input>
-
-//       <label htmlFor='number'>
-//         Section ID
-//       </label>
-//       <input required type="number" id="number" value={sectionID} onChange={changeNumber}>
-//       </input>
-
-//       {/* <button type="button" onClick={cancel}>Cancel</button> */}
-//       <button type="submit" onClick={addFinanceSection}>Add Finance Section</button>
-//     </form>
-//   );
-
-// }
-
-// function Finances() {
-//   const [error, setError] = useState("");
-//   const[finances, setFinanceSections] = useState([]);
-
-//   const fetchFinanceSections = () => {
-//     axios.get(FINANCES_ENDPOINT)
-//         // successfully connected
-//         .then((response) => {
-//           const financesObject = response.data.Data;
-//           const keys = Object.keys(financesObject);
-//           const financesArray = keys.map((key) => financesObject[key]);
-//           setFinanceSections(financesArray);
-//         })
-//         // failed connection
-//         .catch(() => { setError("Something went wrong"); });
-//   };
-
-//   useEffect(
-//     fetchFinanceSections,
-//     [],
-//   );
-
-//   return (
-//     <div className="wrapper">
-//       {/* <Navbar /> */}
-//       <h1>
-//         All Finance Sections
-//       </h1>
-//       {error && (
-//         <div className="error-message">
-//           {error}
-//         </div>
-//       )}
-
-//       <AddFinanceSectionForm setError={setError} />
-
-//       {finances.map((finances) => (
-//         <div className="finances-container">
-//           <Link to={`/categories/finances/${finances.sectionID}`}>
-//             <h2>{finances.name}</h2>
-//           </Link>
-//           <p>Section ID: {finances.sectionID} </p>
-//         </div>
-//       ))
-//       }
-//     </div>
-//   )
-// }
-
-// export default Finances;

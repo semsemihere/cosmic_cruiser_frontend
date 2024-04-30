@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import propTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-// import Navbar from '../Navbar';
+import Navbar from '../Navbar';
 
 import { BACKEND_URL } from '../../constants';
 
@@ -196,52 +196,55 @@ function Categories() {
   useEffect(fetchCategories,[]);
 
   return (
-    <div className="wrapper">
-      <header>
+    <div>
+      <Navbar />
+      <div className="wrapper">
+        <header>
 
-        <h1>
-          Categories
-        </h1>
+          <h1>
+            Categories
+          </h1>
 
-        <button type='button' onClick={showAddCategoryForm}>Add Category</button>
-        <button type='button' onClick={showDeleteCategoryForm}>Delete Category</button>
+          <button type='button' onClick={showAddCategoryForm}>Add Category</button>
+          <button type='button' onClick={showDeleteCategoryForm}>Delete Category</button>
 
-      </header>
+        </header>
 
-      <AddCategoryForm
-        visible={addingCategory}
-        cancel={hideAddCategoryForm}
-        fetchCategories={fetchCategories}
-        setError={setError}
-      />
+        <AddCategoryForm
+          visible={addingCategory}
+          cancel={hideAddCategoryForm}
+          fetchCategories={fetchCategories}
+          setError={setError}
+        />
 
-      <DeleteCategoryForm
-        visible={deletingCategory}
-        cancel={hideDeleteCategoryForm}
-        fetchCategories={fetchCategories}
-        setError={setError}
-      />
+        <DeleteCategoryForm
+          visible={deletingCategory}
+          cancel={hideDeleteCategoryForm}
+          fetchCategories={fetchCategories}
+          setError={setError}
+        />
 
-      {error && <ErrorMessage message={error} /> }
-      {/* (
-        <div className="error-message">
-          {error}
-        </div>
-      )} */}
+        {error && <ErrorMessage message={error} /> }
+        {/* (
+          <div className="error-message">
+            {error}
+          </div>
+        )} */}
 
-      {categories.map((category) => <Category key={category.name} category={category} />)}
+        {categories.map((category) => <Category key={category.name} category={category} />)}
 
-      {/* <AddCategoryForm setError={setError} fetchCategories={fetchCategories}/> */}
+        {/* <AddCategoryForm setError={setError} fetchCategories={fetchCategories}/> */}
 
-      {/* {categories.map((category) => (
-        <div key={category.name} className="categories-container">
-          <h2>{category.name}</h2>
-          <p>ID: {category.categoryID} <br></br> Sections: {category.numSections} </p>
-        </div>
-      ))
+        {/* {categories.map((category) => (
+          <div key={category.name} className="categories-container">
+            <h2>{category.name}</h2>
+            <p>ID: {category.categoryID} <br></br> Sections: {category.numSections} </p>
+          </div>
+        ))
 
-      } */}
+        } */}
       
+      </div>
     </div>
   );
 

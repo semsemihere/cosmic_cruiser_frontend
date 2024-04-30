@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 import propTypes from 'prop-types'
-// import Navbar from '../Navbar';
+import Navbar from '../Navbar';
 import { BACKEND_URL } from '../../constants';
 // import { Link } from 'react-router-dom';
 
@@ -240,41 +240,44 @@ function Users() {
   useEffect(fetchUsers,[]);
 
   return (
-    <div className="wrapper">
-      <header>
-        <h1>
-          Users
-        </h1>
-        {/* <button type='button' onClick={showAddUserForm}>
-            Sign Up
-        </button>
-        <button type='button' onClick={showLoginUserForm}>
-            Sign In
-        </button> */}
-      </header>
+    <div>
+      <Navbar/>
+      <div className="wrapper">
+        <header>
+          <h1>
+            Users
+          </h1>
+          {/* <button type='button' onClick={showAddUserForm}>
+              Sign Up
+          </button>
+          <button type='button' onClick={showLoginUserForm}>
+              Sign In
+          </button> */}
+        </header>
 
-      <AddUserForm
-        visible={addingUser}
-        cancel={hideAddUserForm}
-        fetchUsers={fetchUsers}
-        setError={setError}
-      />
+        <AddUserForm
+          visible={addingUser}
+          cancel={hideAddUserForm}
+          fetchUsers={fetchUsers}
+          setError={setError}
+        />
 
-      <LoginUserForm
-        visible={loginUser}
-        cancel={hideLoginUserForm}
-        fetchUsers={fetchUsers}
-        setError={setError}
-      />
-      
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
+        <LoginUserForm
+          visible={loginUser}
+          cancel={hideLoginUserForm}
+          fetchUsers={fetchUsers}
+          setError={setError}
+        />
+        
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
 
-      {users.map((user) => <User key={user.username} user={user} />)}
-      
+        {users.map((user) => <User key={user.username} user={user} />)}
+        
+      </div>
     </div>
   )
 

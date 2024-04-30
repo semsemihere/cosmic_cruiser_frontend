@@ -16,12 +16,13 @@ import Home from './Components/Home';
 import Nutrition from './Components/Nutrition';
 import EMS from './Components/EMS';
 import Finances from './Components/Finances';
+import Articles from './Components/Articles';
 
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route path="" element={<Login />} /> 
         <Route path="home" element={<Home />} />
@@ -31,6 +32,9 @@ function App() {
         <Route path="categories/emergency_medical_services" element={<EMS />} />
         <Route path="categories/finances" element={<Finances />} />
         <Route path="login" element={<Login />} />
+
+        {/* <Route path="categories/finances/articles" element={<Articles />} /> */}
+        <Route path="categories/finances/:topicId" element={<Articles />} />
       </Routes>
     </BrowserRouter>
   );
