@@ -195,6 +195,11 @@ function Categories() {
 
   useEffect(fetchCategories,[]);
 
+  // useEffect(() => {
+  //   fetchCategories();
+  //   fetchUserRole();
+  // }, []);
+
   return (
     <div>
       <Navbar />
@@ -207,6 +212,10 @@ function Categories() {
 
           <button type='button' onClick={showAddCategoryForm}>Add Category</button>
           <button type='button' onClick={showDeleteCategoryForm}>Delete Category</button>
+
+          {/* {userRole === "admin" && <button type='button' onClick={showAddCategoryForm}>Add Category</button>} */}
+          {/* {userRole === "admin" && <button type='button' onClick={showDeleteCategoryForm}>Delete Category</button>} */}
+
 
         </header>
 

@@ -6,11 +6,6 @@ import { BACKEND_URL } from '../../constants';
 
 const LOGIN_ENDPOINT = `${BACKEND_URL}/login`;
 
-// const FORM = [
-//   { fieldName: 'role', question: 'Role', param_type: 'text', placeholder: 'Role'},
-//   { fieldName: 'username', question: 'Username', param_type: 'text', placeholder: 'Username'},
-//   { fieldName: 'password', question: 'Password', param_type: 'password', placeholder: 'Password'}
-// ]
 
 const FORM = []
 

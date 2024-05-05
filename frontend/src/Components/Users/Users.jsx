@@ -225,14 +225,14 @@ function Users() {
         .catch(() => setError('There was a problem getting the list of users'));
   };
 
-  // const showAddUserForm = () => {
-  //   setAddingUser(true);
-  //   setLoginUser(false);
-  // };
-  // const showLoginUserForm = () => {
-  //   setLoginUser(true);
-  //   setAddingUser(false);
-  // }
+  const showAddUserForm = () => {
+    setAddingUser(true);
+    setLoginUser(false);
+  };
+  const showLoginUserForm = () => {
+    setLoginUser(true);
+    setAddingUser(false);
+  }
 
   const hideAddUserForm = () => { setAddingUser(false); };
   const hideLoginUserForm = () => { setLoginUser(false); }
@@ -247,10 +247,10 @@ function Users() {
           <h1>
             Users
           </h1>
-          {/* <button type='button' onClick={showAddUserForm}>
+          <button type='button' onClick={showAddUserForm}>
               Sign Up
           </button>
-          <button type='button' onClick={showLoginUserForm}>
+          {/* <button type='button' onClick={showLoginUserForm}>
               Sign In
           </button> */}
         </header>
