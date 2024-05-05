@@ -108,8 +108,8 @@ function Nutrition() {
 
       {nutrition.map((nutrition) => (
         <div className="nutrition-container">
-          <Link to={`/categories/nutrition/${nutrition.sectionID}`}>
-            <h2 >{nutrition.name}</h2>
+          <Link to={`/categories/nutrition/${nutrition.sectionName}/${nutrition.sectionID}`}>
+            <h2 >{nutrition.sectionName}</h2>
           </Link>
           <p>Section ID: {nutrition.sectionID} </p>
           {/* <p>Article IDs: {nutrition.arrayOfArticleIDs.join(' ')} </p> */}

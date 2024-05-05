@@ -34,7 +34,8 @@ function App() {
         <Route path="login" element={<Login />} />
 
         {/* <Route path="categories/finances/articles" element={<Articles />} /> */}
-        <Route path="categories/finances/:topicId" element={<Articles />} />
+        <Route path="categories/nutrition/:topicName/:topicID" element={<Articles />} />
+        {/* <Route path="categories/finances/:topicId" element={<Articles />} /> */}
       </Routes>
     </BrowserRouter>
   );

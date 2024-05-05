@@ -6,7 +6,7 @@ import Navbar from '../Navbar';
 
 
 const FINANCES_ENDPOINT = `${BACKEND_URL}/categories/finances`;
-
+const NUTRITION_ENDPOINT = `${BACKEND_URL}/categories/nutrition`;
 
 function sectionObjectToArray({ Data }) {
     const keys = Object.keys(Data);
@@ -18,17 +18,18 @@ function sectionObjectToArray({ Data }) {
 function Articles(){
     const [error, setError] = useState("");
     const [articles, setArticles] = useState([]);
-    const { topicId } = useParams();
-    const section = topicId.slice(0,7)
-    const sectionId = topicId.slice(-3)
+    const { topicName } = useParams();
+    const { topicID } = useParams();
+    const sectionName = topicName;
+    const sectionID = topicID;
 
     const fetchArticles = () => {
-        axios.get(`${FINANCES_ENDPOINT}/${section}/${sectionId}`)
+        axios.get(`${NUTRITION_ENDPOINT}/${sectionName}/${sectionID}`)
         .then(({ data }) => setArticles(sectionObjectToArray(data)))
         .catch(() => setError('There was a problem getting the list of sections'));
     };
 
-    console.log('ARticles:' + fetchArticles);
+    console.log('Articles:' + fetchArticles);
 
     useEffect(fetchArticles, []);
 
@@ -36,7 +37,7 @@ function Articles(){
         <div>
             <Navbar/>
             <div className='wrapper'>
-                <h1>{section} Articles</h1>
+                <h1>{sectionName} Articles</h1>
             
                 {articles.map((article) => (
                     <div className="finances-container">
