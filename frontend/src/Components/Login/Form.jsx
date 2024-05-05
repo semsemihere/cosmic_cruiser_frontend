@@ -41,11 +41,13 @@ const Form =({ fields }) => {
   const answerQuestion = (fieldName, value) => {
     answers[fieldName] = value;
     setAnswers({ ...answers });
+    console.log('Updated answers:', answers);
   };
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log("HELLLLOOOOOOOOOOOOOOOO");
     console.log(answers);
     try {
       await axios.post(LOGIN_ENDPOINT, {
@@ -73,18 +75,23 @@ const Form =({ fields }) => {
                 <select className='form_input'
                 id={field.fld_nm}
                 value={answers[field.fld_nm]}
-                onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
+                onChange={(e) => { 
+                  answerQuestion(field.fld_nm, e.target.value); 
+                }}
                 >
                   {field.choices.map((option) =>(
                     <option key={option} value={option}>{option}</option>
                   ))}
                 </select>
+                
               ) : field.param_type === 'password' ? (
                 <input className='form_input'
                   id={field.fld_nm}
                   type="password"
                   value={answers[field.fld_nm]}
-                  onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
+                  onChange={(e) => { 
+                    answerQuestion(field.fld_nm, e.target.value); 
+                  }}
                   placeholder={field.placeholder}
                 />
               ) : (
@@ -92,7 +99,9 @@ const Form =({ fields }) => {
                   id={field.fld_nm}
                   type="text"
                   value={answers[field.fld_nm]}
-                  onChange={(e) => { answerQuestion(field.fld_nm, e.target.value); }}
+                  onChange={(e) => { 
+                    answerQuestion(field.fld_nm, e.target.value); 
+                  }}
                   placeholder={field.placeholder}
                 />
               )}
