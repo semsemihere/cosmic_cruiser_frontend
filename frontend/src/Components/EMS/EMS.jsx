@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-// import Navbar from '../Navbar';
+import Navbar from '../Navbar';
 
 import { BACKEND_URL } from '../../constants';
 
@@ -67,30 +67,33 @@ function EMS() {
   );
 
   return (
-    <div className="wrapper">
-      {/* <Navbar /> */}
-      <h1>
-        All EMS Sections
-      </h1>
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
+    <div>
+      <Navbar />
 
-      <AddEmsSectionForm setError={setError} />
+      <div className="wrapper">
+        <h1>
+          All EMS Sections
+        </h1>
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
 
-      {ems.map((ems) => (
-        <div className="ems-container">
-          <Link to={`/categories/emergency_medical_services/${ems.sectionID}`}>
-            <h2>{ems.emsName}</h2>
-          </Link>
-          <p>Section ID: {ems.emsID} </p>
-        </div>
-      ))
+        <AddEmsSectionForm setError={setError} />
+
+        {ems.map((ems) => (
+          <div className="ems-container">
+            <Link to={`/categories/emergency_medical_services/${ems.sectionID}`}>
+              <h2>{ems.emsName}</h2>
+            </Link>
+            <p>Section ID: {ems.emsID} </p>
+          </div>
+        ))
 
       }
-      
+        
+      </div>
     </div>
   )
 

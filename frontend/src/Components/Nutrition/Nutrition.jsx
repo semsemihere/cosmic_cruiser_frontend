@@ -93,31 +93,35 @@ function Nutrition() {
   );
 
   return (
-    <div className="wrapper">
-      {/* <Navbar /> */}
-      <h1>
-        All Nutrition Sections
-      </h1>
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
+    <div>
+      <Navbar />
+    
+      <div className="wrapper">
 
-      <AddNutritionSectionForm setError={setError} />
+        <h1>
+          All Nutrition Sections
+        </h1>
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
 
-      {nutrition.map((nutrition) => (
-        <div className="nutrition-container">
-          <Link to={`/categories/nutrition/${nutrition.sectionName}/${nutrition.sectionID}`}>
-            <h2 >{nutrition.sectionName}</h2>
-          </Link>
-          <p>Section ID: {nutrition.sectionID} </p>
-          {/* <p>Article IDs: {nutrition.arrayOfArticleIDs.join(' ')} </p> */}
-        </div>
-      ))
+        <AddNutritionSectionForm setError={setError} />
 
-      }
-      
+        {nutrition.map((nutrition) => (
+          <div className="nutrition-container">
+            <Link to={`/categories/nutrition/${nutrition.sectionName}/${nutrition.sectionID}`}>
+              <h2 >{nutrition.sectionName}</h2>
+            </Link>
+            <p>Section ID: {nutrition.sectionID} </p>
+            {/* <p>Article IDs: {nutrition.arrayOfArticleIDs.join(' ')} </p> */}
+          </div>
+        ))
+
+        }
+        
+      </div>
     </div>
   )
 
