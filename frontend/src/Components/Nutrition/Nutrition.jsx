@@ -45,7 +45,7 @@ function AddSectionForm({
         <input required type="text" id="number" value={sectionID} onChange={changeNumber} />
 
         <button type="button" onClick={cancel}>Cancel</button>
-        <button type="submit" onClick={addNutritionSection}>Add Category</button>
+        <button type="submit" onClick={addNutritionSection}>Add Section</button>
       </div>
     </form>
   )
