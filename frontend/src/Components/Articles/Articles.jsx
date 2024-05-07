@@ -8,6 +8,9 @@ import Navbar from '../Navbar';
 const FINANCES_ENDPOINT = `${BACKEND_URL}/categories/finances`;
 const NUTRITION_ENDPOINT = `${BACKEND_URL}/categories/nutrition`;
 
+const CURR_ENDPOINT = FINANCES_ENDPOINT
+// const CURR_ENDPOINT = NUTRITION_ENDPOINT
+
 function sectionObjectToArray({ Data }) {
     const keys = Object.keys(Data);
     const objects = keys.map((key) => Data[key]);
@@ -24,7 +27,7 @@ function Articles(){
     const sectionID = topicID;
 
     const fetchArticles = () => {
-        axios.get(`${NUTRITION_ENDPOINT}/${sectionName}/${sectionID}`)
+        axios.get(`${CURR_ENDPOINT}/${sectionName}/${sectionID}`)
         .then(({ data }) => setArticles(sectionObjectToArray(data)))
         .catch(() => setError('There was a problem getting the list of sections'));
     };

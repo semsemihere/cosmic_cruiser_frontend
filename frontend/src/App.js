@@ -35,6 +35,7 @@ function App() {
 
         {/* <Route path="categories/finances/articles" element={<Articles />} /> */}
         <Route path="categories/nutrition/:topicName/:topicID" element={<Articles />} />
+        <Route path="categories/finances/:topicName/:topicID" element={<Articles />} />
         {/* <Route path="categories/finances/:topicId" element={<Articles />} /> */}
       </Routes>
     </BrowserRouter>
