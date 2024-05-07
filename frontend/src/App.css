@@ -269,3 +269,12 @@ input, select {
   color: var(--dark-color);
   font-size: 1.5rem;  
 }
+
+.grid-item{   
+  border: 2px solid var(--main-color);
+  margin: 1rem 0;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  border-radius: 5px;
+}
