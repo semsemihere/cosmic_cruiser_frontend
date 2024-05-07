@@ -1,22 +1,5 @@
-// import React, { useEffect, useState } from 'react';
-// import propTypes from 'prop-types'
-// import axios from 'axios';
-// import { Link } from 'react-router-dom';
-
-// import { BACKEND_URL } from '../../constants';
-
-// const NUTRITION_ENDPOINT = `${BACKEND_URL}/categories/nutrition`;
-// const DELETE_NUTRITION_ENDPOINT = `${BACKEND_URL}/categories/nutrition/delete`;
-
-
-// function Nutrition() {
-//   return <div>Loading...</div>;
-// }
-  
-// export default Nutrition;
-
-
 import React, { useEffect, useState } from 'react';
+import propTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar';
@@ -24,8 +7,14 @@ import Navbar from '../Navbar';
 import { BACKEND_URL } from '../../constants';
 
 const NUTRITION_ENDPOINT = `${BACKEND_URL}/categories/nutrition`;
+const DELETE_NUTRITION_ENDPOINT = `${NUTRITION_ENDPOINT}/delete`;
 
-function AddNutritionSectionForm({ setError, fetchNutritionSections }) {
+function AddSectionForm({
+  visible, 
+  cancel, 
+  fetchNutritionSections,
+  setError
+}){
   const [name, setName] = useState('')
   const [sectionID, setSectionID] = useState(0);
 
@@ -35,95 +24,176 @@ function AddNutritionSectionForm({ setError, fetchNutritionSections }) {
   const addNutritionSection = (event) => {
     event.preventDefault();
     axios.post(NUTRITION_ENDPOINT, { name: name, sectionID: sectionID })
-    
-    .then(() => {  // if successful
-      setError('');
-      fetchNutritionSections();
-    })
+    .then(fetchNutritionSections)  // if successful
     .catch((error) => { setError(error.response.data.message); });
   };
 
+  if (!visible) return null;
 
-  return (
-    <form>
+  return(
+    <form onSubmit={addNutritionSection}>
+      <div className='column'>
+        <label htmlFor='name'>
+          Title
+        </label>
+        <input required type="text" id="name" value={name} onChange={changeName} />
 
-      <label htmlFor='name'>
-        Name
-      </label>
-      <input required type="text" id="name" value={name} onChange={changeName}>
-      </input>
+        <label htmlFor='categoryID'>
+          Category ID
+        </label>
+        
+        <input required type="text" id="number" value={sectionID} onChange={changeNumber} />
 
-      <label htmlFor='number'>
-        Section ID
-      </label>
-      <input required type="number" id="number" value={sectionID} onChange={changeNumber}>
-      </input>
-
-      {/* <button type="button" onClick={cancel}>Cancel</button> */}
-      <button type="submit" onClick={addNutritionSection}>Add Nutrition Section</button>
+        <button type="button" onClick={cancel}>Cancel</button>
+        <button type="submit" onClick={addNutritionSection}>Add Category</button>
+      </div>
     </form>
-  );
+  )
 
 }
 
-function Nutrition() {
+function DeleteSectionForm({
+  visible,
+  cancel,
+  fetchNutritionSections,
+  setError,
+}){
+  const [sectionID, setID] = useState('');
+  const changeID = (event) => { setID(event.target.value);};
+
+  const deleteSection = () => {
+    if(!sectionID){
+      setError('Section ID is required!');
+      return;
+    }
+
+    axios.delete(`${DELETE_NUTRITION_ENDPOINT}/${sectionID}`)
+    .then(() => {
+      setError('');
+      fetchNutritionSections();
+    })
+    .catch((error) => { setError(error.response.data.message);});
+  }
+
+  if(!visible) return null;
+
+  return(
+    <form onSubmit={deleteSection}>
+      <div class='column'>
+        <label htmlFor='sectionID'>
+          Section ID
+        </label>
+
+        <input required type="text" id="number" value={sectionID} onChange={changeID} />
+
+        <button type="button" onClick={cancel}>Cancel</button>
+        <button type="submit" onClick={deleteSection}>Delete</button>
+
+      </div>
+    </form>
+  );
+}
+
+AddSectionForm.propTypes = {
+  visible: propTypes.bool.isRequired,
+  cancel: propTypes.func.isRequired,
+  fetchNutritionSections: propTypes.func.isRequired,
+  setError: propTypes.func.isRequired,
+}
+
+function ErrorMessage({ message }) {
+  return (
+    <div className='error-message'>
+      {message}
+    </div>
+  );
+}
+ErrorMessage.propTypes = {
+  message: propTypes.string.isRequired,
+};
+
+function sectionObjectToArray({ Data }) {
+  const keys = Object.keys(Data);
+  const nutrition = keys.map((key) => Data[key]);
+  return nutrition;
+}
+
+function Nutrition(){
   const [error, setError] = useState("");
-  const[nutrition, setNutritionSections] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [addSections, setAddingSections] = useState(false);
+  const [deleteSections, setDeletingSections] = useState(false);
 
   const fetchNutritionSections = () => {
     axios.get(NUTRITION_ENDPOINT)
-        // successfully connected
-        .then((response) => {
-          if (response && response.data && response.data.Data) {
-            const nutritionObject = response.data.Data;
-            const keys = Object.keys(nutritionObject);
-            const nutritionArray = keys.map((key) => nutritionObject[key]);
-            setNutritionSections(nutritionArray);
-          } else {
-            setError("No data received.");
-          }
-        })
-        // failed connection
-        .catch((error) => { setError(error.message); });
+    .then(({ data }) => setSections(sectionObjectToArray(data)))
+    .catch(() => setError('There was a problem getting the list of sections'));
   };
 
-  useEffect(
-    fetchNutritionSections,
-    [],
-  );
+
+  const showAddSectionForm = () => {
+    setAddingSections(true);
+    setDeletingSections(false);
+  };
+
+  const showDeleteSectionForm = () => {
+    setAddingSections(false);
+    setDeletingSections(true);
+  };
+
+  const hideAddSectionForm = () => { setAddingSections(false); };
+  const hideDeleteSectionForm = () => { setDeletingSections(false); }
+
+  useEffect(fetchNutritionSections, []);
 
   return (
+    
     <div>
       <Navbar />
-    
-      <div className="wrapper">
+      <div className='wrapper'>
+        <header>
+          <h1>
+            Nutrition Sections
+          </h1>
 
-        <h1>
-          All Nutrition Sections
-        </h1>
-        {error && (
-          <div className="error-message">
-            {error}
-          </div>
-        )}
+          <button type='button' onClick={showAddSectionForm}>Add Section</button>
+          <button type='button' onClick={showDeleteSectionForm}>Delete Section</button>
 
-        <AddNutritionSectionForm setError={setError} />
+        </header>
 
-        {nutrition.map((nutrition) => (
+        <AddSectionForm
+          visible={addSections}
+          cancel={hideAddSectionForm}
+          fetchNutritionSections={fetchNutritionSections}
+          setError={setError}
+        />
+
+        <DeleteSectionForm
+          visible={deleteSections}
+          cancel={hideDeleteSectionForm}
+          fetchNutritionSections={fetchNutritionSections}
+          setError={setError}
+        />
+
+        {error && <ErrorMessage message={error} /> }
+
+        {/* console.log("Sections"+ sections); */}
+
+        {sections.map((nutrition) => (
           <div className="nutrition-container">
-            <Link to={`/categories/nutrition/${nutrition.sectionName}/${nutrition.sectionID}`}>
-              <h2 >{nutrition.sectionName}</h2>
+            {/* <Link to={`/categories/nutrition/${nutrition.sectionID}`}> */}
+            <Link to={`/categories/nutrition/${nutrition.name}/${nutrition.sectionID}`}>
+              <h2>{nutrition.name}</h2>
             </Link>
             <p>Section ID: {nutrition.sectionID} </p>
-            {/* <p>Article IDs: {nutrition.arrayOfArticleIDs.join(' ')} </p> */}
           </div>
         ))
-
         }
-        
       </div>
+
     </div>
-  )
+  );
+
 
 }
 
