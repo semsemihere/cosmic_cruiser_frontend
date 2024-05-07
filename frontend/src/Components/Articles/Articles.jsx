@@ -27,9 +27,12 @@ function Articles(){
         // .then(({ data }) => setArticles(sectionObjectToArray(data)))
         axios.get(`${CURR_ENDPOINT}/${sectionID}/articles`)
         .then(({ data }) => {
+            console.log('received data' + data)
             if(data && data.Data){
                 const articlesArray = Object.values(data.Data);
                 setArticles(articlesArray);
+
+                console.log("article array" + articlesArray)
             }
             else{
                 setError("Received unexpected data format");
@@ -37,8 +40,6 @@ function Articles(){
         })
         .catch(() => setError('There was a problem getting the list of sections'));
     };
-
-    console.log('Articles:' + fetchArticles);
 
     useEffect(fetchArticles, []);
 
@@ -50,13 +51,11 @@ function Articles(){
                     <h1>{sectionName} Articles</h1>
                 </header>
 
-
                 {Array.isArray(articles) ? (
                     articles.map(article => (
                         <div className='grid-item' >
-                            
                             <Link to={`${article.articleID}`}>
-                                <h2>{article.articleName}</h2>
+                                <h2 key= {article.articleID}>{article.articleName}</h2>
                             </Link>
                             <p>Section ID: {article.articleID} </p>
                         </div>

@@ -5,22 +5,28 @@ import { BACKEND_URL } from '../../constants';
 
 import Navbar from '../Navbar';
 
-const CATEGORIES_ENDPOINT = `${BACKEND_URL}/categories`;
+const FINANCES_ENDPOINT = `${BACKEND_URL}/categories/finances`;
+const NUTRITION_ENDPOINT = `${BACKEND_URL}/categories/nutrition`;
+
+
+// const CURR_ENDPOINT = FINANCES_ENDPOINT
+const CURR_ENDPOINT = NUTRITION_ENDPOINT
+// const CATEGORIES_ENDPOINT = `${BACKEND_URL}/categories`;
 
 function Article(){
     const [error, setError] = useState("");
     const [content, setContent] = useState("");
     const { topicName, topicID, articleID } = useParams();
 
-    const contentID = articleID;
     
     console.log("ARTICLE ID: " + topicName + topicID + articleID);
 
     const fetchArticle = () => {
-        axios.get(CATEGORIES_ENDPOINT,`/article/${contentID}`)
+        // axios.get(CATEGORIES_ENDPOINT,`/article/${contentID}`)
+        axios.get(`${CURR_ENDPOINT}/${topicID}/articles/${articleID}`)
         .then(({ data }) => {
-            
-            console.log("Received data:", data); // currently receives all database ..
+            console.log("Received data:", data); 
+            setContent(data);
         })
         .catch(() => setError('There was a problem getting the list of sections'));
     };
@@ -34,8 +40,12 @@ function Article(){
             <Navbar/>
             <div className='wrapper'>
                 <header>
-                    <h1>{articleID} ABOUT</h1>
+                    <h1>{topicName}</h1>
                 </header>
+
+                <div className='grid-item' >
+                    {content}
+                </div>
 
 
 
@@ -43,7 +53,6 @@ function Article(){
             </div>
 
         </div>
-        
       );
 }
 
