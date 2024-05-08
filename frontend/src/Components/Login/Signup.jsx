@@ -1,10 +1,7 @@
-import React, { useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import propTypes from 'prop-types'
-import Navbar from '../Navbar';
 import { BACKEND_URL } from '../../constants';
-// import { Link } from 'react-router-dom';
-
 
 const USERS_ENDPOINT = `${BACKEND_URL}/users`;
 
@@ -20,6 +17,7 @@ function AddUserForm({
   const [lastname, setLastName] = useState('')
   const [phonenumber, setPhone] = useState(0);
   const [role, setRole] = useState('');
+  
 
   const changeEmail = (event) => { setEmail(event.target.value); };
   const changeUsername = (event) => { setUsername(event.target.value); };
@@ -34,7 +32,15 @@ function AddUserForm({
     axios.post(USERS_ENDPOINT, { email: email, username: username, password: password, 
       firstname: firstname, lastname: lastname, phonenumber: phonenumber, role: role })
     .then(() => {  // if successful
-      setError('Successfully Added');
+      setError('');
+      alert('Successfully Added!');
+      setEmail('');
+      setUsername('');
+      setPassword('');
+      setFirstName('');
+      setLastName('');
+      setPhone(0); // Assuming phone number should reset to 0 or another suitable default
+      setRole('');
     })
     .catch((error) => { 
       setError(error.response.data.message); 
@@ -45,20 +51,19 @@ function AddUserForm({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(answers);
+
     try {
       await axios.post(USERS_ENDPOINT, { email: email, username: username, password: password, 
         firstname: firstname, lastname: lastname, phonenumber: phonenumber, role: role });
-      // alert('Login successful!');
+      
       window.location.href = `http://localhost:3000/home`
     } catch (error) {
       alert('Invalid username or password.');
     }
   };
-
-
-  // INFO TO CREATE USER: email, username, password, firstname, lastname, phonenumber
   
+
+
   return (
     <form onSubmit={handleSubmit}>
       <div class="column">
@@ -77,7 +82,7 @@ function AddUserForm({
         <label htmlFor='password'>
           Password
         </label>
-        <input type="text" id="password" value={password} onChange={changePassword}>
+        <input type="password" id="password" value={password} onChange={changePassword}>
         </input>
 
         <label htmlFor='role'>
@@ -85,8 +90,6 @@ function AddUserForm({
         </label>
         <input type="text" id="role" value={role} onChange={changeRole}>
         </input>
-
-
       </div>
 
       <div class="column">
@@ -165,11 +168,11 @@ User.propTypes = {
 function Signup() {
   const [error, setError] = useState("");
   const [addingUser, setAddingUser] = useState(false);
-
-
   const showAddUserForm = () => {
     setAddingUser(true);
   };
+
+  const hideAddUserForm = () => { setAddingUser(false); };
 
   return (
     <div>
@@ -181,6 +184,7 @@ function Signup() {
 
         <AddUserForm
           visible={addingUser}
+          cancel={hideAddUserForm}
           setError={setError}
         />
         {error && (
