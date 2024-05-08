@@ -1,5 +1,6 @@
 import React from 'react';
 import FormWrapper from './Form'; 
+import Signup from './Signup'; 
 
 function Login() {
   // Define a function to handle form submission
@@ -12,7 +13,13 @@ function Login() {
   return (
     <div className="wrapper">
       <h1>Login</h1>
-      <FormWrapper handleSubmit={handleLogin} />
+      <div>
+        <FormWrapper handleSubmit={handleLogin} />
+      </div>
+      <Signup handleSubmit={handleLogin}/>
+
+      
+      
     </div>
   );
 }

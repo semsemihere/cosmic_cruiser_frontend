@@ -180,7 +180,7 @@ function EMS(){
         {/* console.log("Sections"+ sections); */}
 
         {sections.map((emergency_medical_services) => (
-          <div className="emergency_medical_services-container">
+          <div className="ems-container">
             {/* <Link to={`/categories/EMS/${EMS.sectionID}`}> */}
             <Link to={`/categories/emergency_medical_services/${emergency_medical_services.name}/${emergency_medical_services.sectionID}`}>
               <h2>{emergency_medical_services.name}</h2>

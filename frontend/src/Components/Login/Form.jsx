@@ -47,7 +47,6 @@ const Form =({ fields }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("HELLLLOOOOOOOOOOOOOOOO");
     console.log(answers);
     try {
       await axios.post(LOGIN_ENDPOINT, {

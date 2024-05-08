@@ -50,6 +50,8 @@ button:hover {
   padding: 1em;
   margin: 1em 0;
   border-radius: 5px;
+  font-size:1.3rem; 
+  color: red;
 }
 
 form {
