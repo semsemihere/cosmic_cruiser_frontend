@@ -71,7 +71,7 @@ const Form =({ fields }) => {
           ) : (
             <>
               <label className='form_label' htmlFor={field.fld_nm}>{field.question}</label>
-              {field.param_type === 'dropdown' ? (
+              {field.param_type === 'role' ? (
                 <select className='form_input'
                 id={field.fld_nm}
                 value={answers[field.fld_nm]}

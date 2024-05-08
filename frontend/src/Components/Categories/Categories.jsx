@@ -136,9 +136,9 @@ function Category ({ category }) {
       </Link>
             
       <p>
-        ID: {categoryID}
+        Category ID: {categoryID}
         <br></br>
-        Sections: {numSections}
+        {/* Sections: {numSections} */}
       </p>
 
     </div>
@@ -210,8 +210,8 @@ function Categories() {
             Categories
           </h1>
 
-          <button type='button' onClick={showAddCategoryForm}>Add Category</button>
-          <button type='button' onClick={showDeleteCategoryForm}>Delete Category</button>
+          {/* <button type='button' onClick={showAddCategoryForm}>Add Category</button>
+          <button type='button' onClick={showDeleteCategoryForm}>Delete Category</button> */}
 
           {/* {userRole === "admin" && <button type='button' onClick={showAddCategoryForm}>Add Category</button>} */}
           {/* {userRole === "admin" && <button type='button' onClick={showDeleteCategoryForm}>Delete Category</button>} */}
